@@ -492,12 +492,12 @@
       </section>
 
       <!-- ===================================================================== -->
-      <!-- LECTURE 02: INTRODUCTION TO SUPERVISED MACHINE LEARNING (Pages 1 - 3) -->
+      <!-- LECTURE 02: INTRODUCTION TO SUPERVISED MACHINE LEARNING -->
       <!-- ===================================================================== -->
       <div id="section-lec2" class="view-section space-y-8" data-section="lec2">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div>
-            <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Lecture 02 • Notes Pages 1–3</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Lecture 02</span>
             <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Introduction to Supervised Machine Learning</h2>
           </div>
           <a href="https://www.youtube.com/watch?v=xIQkf7ZGQhM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs font-semibold text-indigo-300 hover:bg-indigo-500/20 transition">
@@ -509,7 +509,6 @@
         <article id="lec2-paradigm" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">2.1 The Supervised Machine Learning Paradigm vs. Usual Programming</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 1</span>
           </div>
           <p class="text-sm text-slate-300 leading-relaxed">
             Virtually every modern AI system—including large language models (LLMs) like ChatGPT, Gemini, and Claude—is built algorithmically upon the <strong>supervised machine learning paradigm</strong> (often termed <em>self-supervised learning</em> when input-output pairs are extracted automatically from raw text, though the underlying training algorithm is identical). To understand why supervised ML is revolutionary, contrast it with how we write traditional software:
@@ -597,7 +596,6 @@
         <article id="lec2-notation" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">2.2 Core Terminology &amp; Notation</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 1</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -624,11 +622,10 @@
             </div>
           </div>
 
-          <!-- Side-by-Side Comparison from Page 1 & Page 2 -->
+          <!-- Side-by-Side Comparison -->
           <div id="lec2-vs" class="pt-2 space-y-4">
             <h4 class="text-base font-bold text-white flex items-center gap-2">
               <span>2.3 Canonical Examples &amp; Their Fundamental Difference</span>
-              <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Pages 1–2</span>
             </h4>
 
             <div class="overflow-x-auto rounded-xl border border-slate-800">
@@ -670,7 +667,7 @@
                     </td>
                   </tr>
                   <tr class="bg-indigo-950/20">
-                    <td class="p-3.5 font-bold text-indigo-300">Fundamental Difference (Page 2 Highlight)</td>
+                    <td class="p-3.5 font-bold text-indigo-300">Fundamental Difference</td>
                     <td class="p-3.5 text-slate-200">
                       <strong>No single "right" answer (One-to-Many mapping possible):</strong> Many valid words can follow <code>"the quick"</code> (e.g., <em>brown, fox, cat, response</em>). Therefore, the model must learn to output a <strong>probability distribution</strong> over all possible next words.
                     </td>
@@ -684,11 +681,10 @@
           </div>
         </article>
 
-        <!-- 2.4 The THREE Ingredients of an ML Algorithm (Pages 2 - 3) -->
+        <!-- 2.4 The THREE Ingredients of an ML Algorithm -->
         <article id="lec2-ingredients" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">2.4 The Three Ingredients of Every Machine Learning Algorithm</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Pages 2–3</span>
           </div>
           <p class="text-sm text-slate-300 leading-relaxed">
             Every machine learning algorithm—whether simple linear regression, gradient-boosted decision trees, or a frontier Transformer LLM—is completely defined by three specific choices:
@@ -704,7 +700,7 @@
               The <strong>Model</strong> (the ML program produced by training) is a function <span class="math-font italic font-semibold text-white">h</span> (historically standing for <em>hypothesis</em>) that maps <strong>"inputs"</strong> to <strong>"predicted outputs"</strong>. Crucially, even when the desired output in the training set is a discrete label like <code>"cat"</code>, we typically design the model to output a <strong>list of probabilities</strong> (a soft prediction):
             </p>
 
-            <!-- Visual Box of the Cat Image -> h -> [0.1, 0.9] example from Page 2 -->
+            <!-- Visual Box of the Cat Image -> h -> [0.1, 0.9] example -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm">
               <div class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-center">
                 <div class="text-lg">🐱</div>
@@ -767,9 +763,9 @@
               </div>
             </div>
 
-            <!-- Box from Page 3: Key Modern AI Observation -->
+            <!-- Box: Key Modern AI Observation -->
             <div class="bg-amber-950/25 border border-amber-500/40 rounded-xl p-4 space-y-1.5">
-              <div class="text-xs font-bold uppercase tracking-wider text-amber-300">Crucial Modern AI Insight (Page 3 Highlight)</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-amber-300">Crucial Modern AI Insight</div>
               <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
                 In modern AI, the <strong>loss function</strong> and <strong>optimization procedure</strong> are almost always fixed across tasks: virtually every modern system uses <strong>Cross-Entropy Loss</strong> and some flavor of <strong>Gradient Descent</strong> (such as Stochastic Gradient Descent or Adam). <strong>It is the Model Architecture (Model Class)</strong>—and the training data—that varies!
               </p>
@@ -777,11 +773,10 @@
           </div>
         </article>
 
-        <!-- 2.5 Generalization & Downstream Tasks (Page 3) -->
+        <!-- 2.5 Generalization & Downstream Tasks -->
         <article id="lec2-generalization" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">2.5 Generalization, The Lookup-Table Trap &amp; Downstream Tasks</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 3</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -808,12 +803,12 @@
       </div>
 
       <!-- ===================================================================== -->
-      <!-- LECTURE 03: LINEAR ALGEBRA & PYTORCH FOUNDATIONS (Pages 4 - 12)       -->
+      <!-- LECTURE 03: LINEAR ALGEBRA & PYTORCH FOUNDATIONS       -->
       <!-- ===================================================================== -->
       <div id="section-lec3" class="view-section space-y-8 print-break" data-section="lec3">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div>
-            <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Lecture 03 • Notes Pages 4–12</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Lecture 03</span>
             <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Linear Algebra &amp; PyTorch Foundations</h2>
           </div>
           <a href="https://www.youtube.com/watch?v=tlbLH77GFLQ" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/20 transition">
@@ -830,14 +825,13 @@
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 font-semibold text-slate-200">5. PyTorch &amp; "Tensors"</div>
         </div>
 
-        <!-- 3.1 Recap & Vectors (Page 4) -->
+        <!-- 3.1 Recap & Vectors -->
         <article id="lec3-recap-vectors" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.1 Lecture Recap &amp; Vectors: 1D Arrays of Numbers</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 4</span>
           </div>
 
-          <!-- Quick Recap Box from Page 4 -->
+          <!-- Quick Recap Box -->
           <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-4">
             <div class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">Recap: The 3 Ingredients of ML &amp; Why Linear Algebra Matters</div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -923,11 +917,10 @@
           </div>
         </article>
 
-        <!-- 3.2 Vector-Vector Multiplication (Inner Product) & PyTorch Implementation (Page 5) -->
+        <!-- 3.2 Vector-Vector Multiplication (Inner Product) & PyTorch Implementation -->
         <article id="lec3-inner-pytorch" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.2 Vector-Vector Multiplication (Inner / Dot Product) &amp; PyTorch</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 5</span>
           </div>
 
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -940,10 +933,10 @@
             </div>
           </div>
 
-          <!-- PyTorch Code Block from Page 5 -->
+          <!-- PyTorch Code Block -->
           <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
             <div class="flex items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800">
-              <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Implementations: Vectors &amp; Inner Product (Page 5)</span>
+              <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Implementations: Vectors &amp; Inner Product</span>
               <button type="button" class="copy-code-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition" data-code-target="code-page5">Copy Code</button>
             </div>
             <pre id="code-page5" class="p-4 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"><code>import torch
@@ -966,11 +959,10 @@ print(x @ y)      # tensor(32)</code></pre>
           </div>
         </article>
 
-        <!-- 3.3 Matrices, Operations, Transpose & Column/Row Slices (Pages 5 - 6) -->
+        <!-- 3.3 Matrices, Operations, Transpose & Column/Row Slices -->
         <article id="lec3-matrices" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.3 Matrices, Transpose &amp; Column/Row Representations</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Pages 5–6</span>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -992,7 +984,7 @@ print(x @ y)      # tensor(32)</code></pre>
               </p>
             </div>
 
-            <!-- Matrix Addition, Scalar Mult, Transpose (Page 6) -->
+            <!-- Matrix Addition, Scalar Mult, Transpose -->
             <div class="space-y-3 text-xs">
               <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5">
                 <div class="font-bold text-indigo-300">1) Matrix Addition (<span class="math-font">A, B &isin; ℝ<sup>m &times; n</sup></span>)</div>
@@ -1009,10 +1001,10 @@ print(x @ y)      # tensor(32)</code></pre>
             </div>
           </div>
 
-          <!-- Symbolic 3x3 Transpose from Page 6 + Numerical 2x3 Transpose -->
+          <!-- Symbolic 3x3 Transpose + Numerical 2x3 Transpose -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-center font-mono text-xs sm:text-sm">
-              <div class="text-xs text-slate-400 mb-2 font-sans">Symbolic Transpose (Page 6 Notes)</div>
+              <div class="text-xs text-slate-400 mb-2 font-sans">Symbolic Transpose</div>
               <span class="matrix-bracket">
                 <span class="matrix-grid" style="grid-template-columns: repeat(3, 1fr);">
                   <span class="text-indigo-300">A₁₁</span><span class="text-indigo-300">A₁₂</span><span class="text-indigo-300">A₁₃</span>
@@ -1050,7 +1042,7 @@ print(x @ y)      # tensor(32)</code></pre>
             </div>
           </div>
 
-          <!-- Column vs Row Vector Convention + Block Decompositions (Page 6) -->
+          <!-- Column vs Row Vector Convention + Block Decompositions -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div class="bg-indigo-950/20 border border-indigo-500/30 rounded-xl p-4 space-y-2">
               <div class="font-bold text-indigo-300 uppercase">Column vs. Row Vector Rule</div>
@@ -1084,11 +1076,10 @@ print(x @ y)      # tensor(32)</code></pre>
           </div>
         </article>
 
-        <!-- 3.4 Matrix-Vector Product Ax (Page 7) -->
+        <!-- 3.4 Matrix-Vector Product Ax -->
         <article id="lec3-matvec" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.4 Matrix-Vector Multiplication (<span class="math-font">Ax</span>): Two Dual Interpretations</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 7</span>
           </div>
 
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -1156,11 +1147,10 @@ print(x @ y)      # tensor(32)</code></pre>
           </div>
         </article>
 
-        <!-- 3.5 Vector-Matrix Product x^T A (Page 8) -->
+        <!-- 3.5 Vector-Matrix Product x^T A -->
         <article id="lec3-vecmat" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.5 Vector-Matrix Multiplication (<span class="math-font">x<sup>T</sup>A</span>): Two Dual Interpretations</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 8</span>
           </div>
 
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -1208,11 +1198,10 @@ print(x @ y)      # tensor(32)</code></pre>
           </div>
         </article>
 
-        <!-- 3.6 PyTorch Coding & Numerical Walkthroughs: A @ x and z @ A (Page 9) -->
+        <!-- 3.6 PyTorch Coding & Numerical Walkthroughs: A @ x and z @ A -->
         <article id="lec3-pytorch-mv" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.6 Numerical Walkthrough &amp; PyTorch Coding: <code>A @ x</code> and <code>z @ A</code></h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 9</span>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -1283,7 +1272,7 @@ print(x @ y)      # tensor(32)</code></pre>
 
           <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
             <div class="flex items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800">
-              <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Code: Matrix-Vector &amp; Vector-Matrix Products (Page 9)</span>
+              <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Code: Matrix-Vector &amp; Vector-Matrix Products</span>
               <button type="button" class="copy-code-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition" data-code-target="code-page9">Copy Code</button>
             </div>
             <pre id="code-page9" class="p-4 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"><code>import torch
@@ -1305,11 +1294,10 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
           </div>
         </article>
 
-        <!-- 3.7 Matrix-Matrix Multiplication AB (Page 10) -->
+        <!-- 3.7 Matrix-Matrix Multiplication AB -->
         <article id="lec3-matmat" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.7 Matrix-Matrix Multiplication (<span class="math-font">AB</span>): Three Core Interpretations</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 10</span>
           </div>
 
           <div class="bg-slate-950 border border-indigo-500/30 rounded-xl p-4 space-y-2">
@@ -1324,11 +1312,11 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
               (AB)<sub>ij</sub> = &sum;<span class="text-xs align-sub text-indigo-300">k=1..n</span> A<sub>ik</sub> B<sub>kj</sub>
             </div>
             <p class="text-[11px] text-slate-400 text-center">
-              <em>Note on Handwritten Notes &amp; Lecture Errata:</em> On Page 10 of the handwritten notes, the summation term is written <span class="math-font">A<sub>ik</sub>B<sub>ij</sub></span> (a small pen slip for <span class="math-font">A<sub>ik</sub>B<sub>kj</sub></span>), and in the Lecture 3 video at 1:15:50 Prof. Kolter initially wrote column <span class="math-font">b<sub>n</sub></span> before correcting it to <span class="math-font">b<sub>p</sub></span> at 1:19:10.
+              <em>Note on Handwritten Notes &amp; Lecture Errata:</em> In the handwritten notes, the summation term is written <span class="math-font">A<sub>ik</sub>B<sub>ij</sub></span> (a small pen slip for <span class="math-font">A<sub>ik</sub>B<sub>kj</sub></span>), and in the Lecture 3 video at 1:15:50 Prof. Kolter initially wrote column <span class="math-font">b<sub>n</sub></span> before correcting it to <span class="math-font">b<sub>p</sub></span> at 1:19:10.
             </p>
           </div>
 
-          <!-- 3 Interpretations Grid from Page 10 -->
+          <!-- 3 Interpretations Grid -->
           <div class="grid grid-cols-1 gap-5">
             <!-- Interpretation #1 -->
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
@@ -1422,14 +1410,13 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
           </div>
         </article>
 
-        <!-- 3.8 Implications of These Interpretations: AX vs XB (Page 11) -->
+        <!-- 3.8 Implications of These Interpretations: AX vs XB -->
         <article id="lec3-implications" class="searchable-card bg-slate-900/70 border-2 border-indigo-500/40 rounded-2xl p-6 space-y-5 shadow-xl">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
               <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Core Deep Learning &amp; Transformer Insight</span>
               <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">3.8 Structural Implications: Left-Multiplication (<span class="math-font">AX</span>) vs. Right-Multiplication (<span class="math-font">XB</span>)</h3>
             </div>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 11</span>
           </div>
 
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -1488,11 +1475,10 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
           </div>
         </article>
 
-        <!-- 3.9 Properties of Matrix Multiplication & Tensors in PyTorch (Pages 11 - 12) -->
+        <!-- 3.9 Properties of Matrix Multiplication & Tensors in PyTorch -->
         <article id="lec3-properties-tensors" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="text-lg sm:text-xl font-bold text-white">3.9 Properties of Matrix Multiplication &amp; PyTorch Tensors</h3>
-            <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Pages 11–12</span>
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-800">
@@ -1536,16 +1522,16 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
             </table>
           </div>
 
-          <!-- Page 12 PyTorch Matrix Multiplication & 3D Tensors -->
+          <!-- PyTorch matrix multiplication & 3D tensors -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
             <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
               <div class="flex items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800">
-                <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Matrix Multiplication &amp; Tensors (Page 12)</span>
+                <span class="text-xs font-mono font-semibold text-cyan-300"># PyTorch Matrix Multiplication &amp; Tensors</span>
                 <button type="button" class="copy-code-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition" data-code-target="code-page12">Copy Code</button>
               </div>
               <pre id="code-page12" class="p-4 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"><code>import torch
 
-# Matrix A: 2x3, Matrix B: 3x3 (from Page 12 notes)
+# Matrix A: 2x3, Matrix B: 3x3
 A = torch.tensor([[7, 3, 2],
                   [2, 4, 8]])
 B = torch.tensor([[5, 6, 7],
@@ -1567,7 +1553,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
 
             <!-- 3D Tensor SVG & GPU Hardware Note -->
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-4">
-              <div class="text-xs font-bold uppercase tracking-wider text-purple-400">Think of Tensors as "Stacks of Matrices" (Page 12)</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-purple-400">Think of Tensors as "Stacks of Matrices"</div>
               <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 While pure mathematics defines tensors via multi-linear algebraic transformations, in PyTorch and deep learning a <strong>"Tensor"</strong> simply means a <strong>multi-dimensional array</strong>:
               </p>
@@ -1604,9 +1590,9 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
               <p class="text-xs text-slate-400 mt-0.5">Select any Lecture 3 preset or edit numbers directly. Click any output cell to trace its exact inner product, column combination, and row combination!</p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <button type="button" data-preset="matvec" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold transition">Page 9: A @ x</button>
-              <button type="button" data-preset="vecmat" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">Page 9: z @ A</button>
-              <button type="button" data-preset="matmat_notes" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">Page 12: A @ B (Notes)</button>
+              <button type="button" data-preset="matvec" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold transition">A @ x</button>
+              <button type="button" data-preset="vecmat" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">z @ A</button>
+              <button type="button" data-preset="matmat_notes" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">A @ B (course example)</button>
               <button type="button" data-preset="matmat_video" class="lab-preset-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">Lec 3 Video: A @ B</button>
             </div>
           </div>
@@ -1648,7 +1634,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           </div>
         </section>
 
-        <!-- LAB 2: Interactive Loss Function & Probability Simulator (Lecture 2 Page 2-3) -->
+        <!-- LAB 2: Interactive loss function & probability simulator -->
         <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -1669,7 +1655,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
                 <div class="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>0.01 (Confident Wrong)</span>
                   <span>0.50 (Uncertain)</span>
-                  <span>0.90 (Page 2 Note)</span>
+                  <span>0.90</span>
                   <span>0.99 (Confident Right)</span>
                 </div>
               </div>
@@ -1709,8 +1695,8 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
         <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h3 class="text-lg font-bold text-white">Lab 3: Page 11 Live Proof — Why <span class="math-font">AX</span> Mixes Rows While <span class="math-font">XB</span> Keeps Rows Independent</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Test Prof. Kolter's Page 11 insight: modify only Row 1 (<span class="math-font">x₁<sup>T</sup></span>) or swap rows of <span class="math-font">X</span> and observe which rows change in <span class="math-font">AX</span> vs. <span class="math-font">XB</span>!</p>
+              <h3 class="text-lg font-bold text-white">Lab 3: Live proof — Why <span class="math-font">AX</span> Mixes Rows While <span class="math-font">XB</span> Keeps Rows Independent</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Test the lecture insight: modify only Row 1 (<span class="math-font">x₁<sup>T</sup></span>) or swap rows of <span class="math-font">X</span> and observe which rows change in <span class="math-font">AX</span> vs. <span class="math-font">XB</span>!</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <button type="button" id="axxb-modify-row1" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"> Perturb Only Row 1 of X (+10)</button>
@@ -2000,22 +1986,22 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
       var labPresets = {
         matvec: {
           mode: 'matvec',
-          leftLabel: 'Matrix A (2 × 3) [Page 9]',
-          rightLabel: 'Column Vector x (3 × 1) [Page 9]',
+          leftLabel: 'Matrix A (2 × 3)',
+          rightLabel: 'Column Vector x (3 × 1)',
           left: [[7, 3, 2], [2, 4, 8]],
           right: [[1], [2], [3]]
         },
         vecmat: {
           mode: 'vecmat',
-          leftLabel: 'Row Vector zᵀ (1 × 2) [Page 9]',
-          rightLabel: 'Matrix A (2 × 3) [Page 9]',
+          leftLabel: 'Row Vector zᵀ (1 × 2)',
+          rightLabel: 'Matrix A (2 × 3)',
           left: [[1, 2]],
           right: [[7, 3, 2], [2, 4, 8]]
         },
         matmat_notes: {
           mode: 'matmat',
-          leftLabel: 'Matrix A (2 × 3) [Page 12 Notes]',
-          rightLabel: 'Matrix B (3 × 3) [Page 12 Notes]',
+          leftLabel: 'Matrix A (2 × 3)',
+          rightLabel: 'Matrix B (3 × 3)',
           left: [[7, 3, 2], [2, 4, 8]],
           right: [[5, 6, 7], [4, 2, 3], [3, 2, 5]]
         },
@@ -2031,8 +2017,8 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
       var currentLabState = {
         left: [[7, 3, 2], [2, 4, 8]],
         right: [[1], [2], [3]],
-        leftLabel: 'Matrix A (2 × 3) [Page 9]',
-        rightLabel: 'Column Vector x (3 × 1) [Page 9]',
+        leftLabel: 'Matrix A (2 × 3)',
+        rightLabel: 'Column Vector x (3 × 1)',
         selectedRow: 0,
         selectedCol: 0
       };
@@ -2348,7 +2334,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           cat: 'supervised', level: 'Intermediate',
           q: 'What are the three ingredients of every machine learning algorithm, and which one varies most in modern AI?',
           hint: 'Model, loss, and one more. Then ask which of the three actually changes from one modern system to the next.',
-          a: 'Every ML algorithm is defined by <strong>(1) the model class</strong> (the architecture) <em>h : inputs → predicted outputs</em>, <strong>(2) the loss function</strong> <em>L : predicted × desired → ℝ₊</em>, and <strong>(3) the optimization procedure</strong> that finds the model in the class with low total training loss. As Lecture 2 (page 3) emphasizes, in modern AI the loss is almost always <strong>cross-entropy</strong> and the optimizer is almost always a form of <strong>gradient descent</strong>. What varies is the <strong>model architecture</strong> and the training data.',
+          a: 'Every ML algorithm is defined by <strong>(1) the model class</strong> (the architecture) <em>h : inputs → predicted outputs</em>, <strong>(2) the loss function</strong> <em>L : predicted × desired → ℝ₊</em>, and <strong>(3) the optimization procedure</strong> that finds the model in the class with low total training loss. As Lecture 2 emphasizes, in modern AI the loss is almost always <strong>cross-entropy</strong> and the optimizer is almost always a form of <strong>gradient descent</strong>. What varies is the <strong>model architecture</strong> and the training data.',
           f: '<strong>Why is it convenient that the loss and optimizer are mostly fixed?</strong> Tooling, intuition and infrastructure carry over between projects, so research effort concentrates on architectures and data.',
           refs: ['lec2']
         },
@@ -2762,7 +2748,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           q: '1. For A = [[7, 3, 2], [2, 4, 8]] and z = [1, 2], what is the vector-matrix product z @ A?',
           opts: ['[19, 34]', '[11, 11, 18]', '[9, 7, 10]', 'Shape error'],
           ans: 1,
-          exp: 'z @ A = 1*[7, 3, 2] + 2*[2, 4, 8] = [7+4, 3+8, 2+16] = [11, 11, 18] (Page 9).'
+          exp: 'z @ A = 1*[7, 3, 2] + 2*[2, 4, 8] = [7+4, 3+8, 2+16] = [11, 11, 18].'
         },
         {
           q: '2. Which expression computes the 2nd interpretation (column linear combination) of A @ x in PyTorch for A (2×3) and x (3,)?',
@@ -2773,19 +2759,19 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
             'A * x'
           ],
           ans: 1,
-          exp: 'Interpretation 2 weights each column A[:, i] by scalar x[i] and sums them: A[:,0]*x[0] + A[:,1]*x[1] + A[:,2]*x[2] = [19, 34] (Page 9).'
+          exp: 'Interpretation 2 weights each column A[:, i] by scalar x[i] and sums them: A[:,0]*x[0] + A[:,1]*x[1] + A[:,2]*x[2] = [19, 34].'
         },
         {
           q: '3. Suppose X ∈ ℝ^(m×n) has rows representing different tokens. Which operation transforms each token’s features independently WITHOUT mixing tokens?',
           opts: ['A @ X (where A is m×m)', 'X @ B (where B is n×n)', 'X.T @ X', 'A @ X @ B'],
           ans: 1,
-          exp: 'Right-multiplication X @ B applies B to each row xᵢᵀB independently without mixing rows of X (Page 11).'
+          exp: 'Right-multiplication X @ B applies B to each row xᵢᵀB independently without mixing rows of X.'
         },
         {
           q: '4. In Modern AI, which of the 3 ML ingredients varies the most across different algorithms and models?',
           opts: ['The Loss Function', 'The Optimization Procedure', 'The Model Architecture (Model Class)', 'All three vary equally'],
           ans: 2,
-          exp: 'Loss is almost always Cross-Entropy and optimization is almost always Gradient Descent (SGD/Adam); it is the Model Architecture that varies (Page 3).'
+          exp: 'Loss is almost always Cross-Entropy and optimization is almost always Gradient Descent (SGD/Adam); it is the Model Architecture that varies.'
         },
         {
           q: '5. If A ∈ ℝ^(2×3) and B ∈ ℝ^(3×4), what is the shape of (A @ B).T?',
