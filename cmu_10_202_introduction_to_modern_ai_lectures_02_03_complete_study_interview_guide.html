@@ -288,8 +288,16 @@
     #section-labs > section, #flashcards-quiz > div { padding: 1.25rem 1.5rem !important; }
     #flashcards-quiz { grid-template-columns: minmax(0, 1fr) !important; }
     #flashcards-quiz > div:first-child { justify-content: flex-start !important; }
-    #fc-card-box { min-height: 220px !important; border: 1px solid var(--divider) !important; box-shadow: none !important; }
+    #fc-card-box { min-height: 220px !important; border: 1px solid var(--divider) !important; box-shadow: none !important; background: #fff !important; }
     #fc-card-box:hover { border-color: var(--primary) !important; }
+    /* Counter badge: span.bg-slate-950 is not remapped like divs, so it was a dark box with dark text */
+    #fc-counter, #quiz-score-badge {
+      background: var(--primary-light) !important;
+      border: 1px solid var(--primary-line) !important;
+      color: var(--primary-dark) !important;
+      box-shadow: none !important;
+      font-weight: 500;
+    }
     div.searchable-card.bg-slate-900\/90 > button:hover { background-color: #fafafa !important; }
 
     /* ---------- Code (same as <pre> in the DSA notes) ---------- */
@@ -1776,7 +1784,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
                 <span class="text-xs font-bold uppercase text-amber-400">Active Recall Deck</span>
                 <h3 class="text-base font-bold text-white">Rapid-Fire Concept Flashcards</h3>
               </div>
-              <span id="fc-counter" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-slate-300">Card 1 / 10</span>
+              <span id="fc-counter" class="text-xs font-mono px-2.5 py-1 rounded">Card 1 / 10</span>
             </div>
 
             <div id="fc-card-box" class="min-h-[190px] bg-slate-950 border-2 border-indigo-500/40 rounded-2xl p-6 flex flex-col justify-center items-center text-center cursor-pointer hover:border-indigo-400 transition select-none">
