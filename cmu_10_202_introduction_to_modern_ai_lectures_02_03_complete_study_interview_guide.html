@@ -18,8 +18,9 @@
             serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif']
           },
           fontSize: {
-            xs: ['0.84rem', { lineHeight: '1.6' }],
-            sm: ['0.95rem', { lineHeight: '1.7' }]
+            xs: ['0.875rem', { lineHeight: '1.65' }],
+            sm: ['1.0625rem', { lineHeight: '1.8' }],
+            base: ['1.0625rem', { lineHeight: '1.8' }]
           }
         }
       }
@@ -27,10 +28,10 @@
   </script>
   <style>
     /* ==========================================================================
-       Material Design (light only)
-       Indigo primary + pink accent, grey page, white elevated cards.
-       The markup uses dark-slate Tailwind utility classes; they are re-mapped
-       below to light Material equivalents so the HTML/JS stay untouched.
+       Reading-first Material theme (light only)
+       Indigo primary, pink accent (used sparingly), grey page, white paper.
+       The markup uses dark-slate Tailwind utilities; they are re-mapped below
+       so the HTML and JS can stay as they are.
        ========================================================================== */
     :root {
       --primary: #3f51b5;
@@ -40,267 +41,269 @@
       --accent: #ff4081;
       --bg: #f5f5f5;
       --surface: #ffffff;
-      --inner: #f7f8fc;
+      --inner: #fafafa;
       --fg: rgba(0, 0, 0, 0.87);
-      --body: rgba(0, 0, 0, 0.76);
-      --muted: rgba(0, 0, 0, 0.60);
+      --body: rgba(0, 0, 0, 0.80);
+      --muted: rgba(0, 0, 0, 0.58);
       --divider: rgba(0, 0, 0, 0.12);
-      --code-bg: #eceff1;
-      --good: #2e7d32;  --good-bg: #e8f5e9;  --good-line: #a5d6a7;
-      --bad:  #c62828;  --bad-bg:  #ffebee;  --bad-line:  #ef9a9a;
-      --warn: #b26a00;  --warn-bg: #fff8e1;  --warn-line: #ffe082;
-      --cyan: #00838f;  --cyan-bg: #e0f7fa;  --cyan-line: #80deea;
-      --purple: #6a1b9a; --purple-bg: #f3e5f5; --purple-line: #ce93d8;
+      --hair: rgba(0, 0, 0, 0.08);
+      --code-bg: #f3f5f7;
+      --good: #2e7d32;  --good-bg: #f1f8f2;  --good-line: #a5d6a7;
+      --bad:  #c62828;  --bad-bg:  #fdf3f3;  --bad-line:  #ef9a9a;
+      --warn: #a65f00;  --warn-bg: #fffaf0;  --warn-line: #ffd180;
+      --aside-bg: #f6f7fb;
       --shadow-1: 0 1px 3px rgba(0,0,0,.20), 0 1px 1px rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
       --shadow-2: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     }
 
-    html { scroll-behavior: smooth; }
-    ::selection { background: var(--primary); color: #fff; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    ::selection { background: var(--primary-line); color: var(--fg); }
 
     body#app-body {
       background: var(--bg) !important;
       color: var(--body) !important;
       font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.75;
+      font-size: 17px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ---------- Small-radius Material corners ---------- */
     .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl { border-radius: 4px !important; }
 
-    /* ---------- Text colours ---------- */
+    /* ---------- Text colours: indigo for emphasis, green/amber/red only for meaning ---------- */
     .text-white, .text-slate-100, .text-slate-200 { color: var(--fg) !important; }
     .text-slate-300 { color: var(--body) !important; }
     .text-slate-400, .text-slate-500 { color: var(--muted) !important; }
-
-    .text-indigo-300, .text-indigo-400 { color: var(--primary-dark) !important; }
-    .text-cyan-300, .text-cyan-400 { color: var(--cyan) !important; }
+    .text-indigo-300, .text-indigo-400, .text-cyan-300, .text-cyan-400,
+    .text-purple-300, .text-purple-400 { color: var(--primary-dark) !important; }
     .text-emerald-200, .text-emerald-300, .text-emerald-400 { color: var(--good) !important; }
     .text-amber-300, .text-amber-400 { color: var(--warn) !important; }
     .text-rose-200, .text-rose-300, .text-rose-400 { color: var(--bad) !important; }
-    .text-purple-300, .text-purple-400 { color: var(--purple) !important; }
 
-    .hover\:text-white:hover:not(.bg-indigo-600) { color: var(--primary-dark) !important; }
+    .hover\:text-white:hover:not(.bg-indigo-600) { color: var(--primary) !important; }
     .hover\:text-indigo-300:hover, .hover\:text-cyan-300:hover { color: var(--primary) !important; }
     .placeholder-slate-500::placeholder { color: rgba(0,0,0,.45); }
-
-    /* Slightly larger fine print for easier reading */
     .text-\[11px\] { font-size: 0.8rem !important; line-height: 1.55 !important; }
     .text-\[10px\] { font-size: 0.74rem !important; line-height: 1.5 !important; }
+
+    /* Small uppercase labels become quiet "kickers" instead of shouting badges */
+    .uppercase.tracking-widest, .uppercase.tracking-wider {
+      font-weight: 500 !important;
+      letter-spacing: .08em !important;
+      font-size: 0.78rem !important;
+    }
 
     /* ---------- Surfaces ---------- */
     .bg-slate-950, .bg-slate-950\/90, .bg-slate-950\/80, .bg-slate-950\/60, .bg-slate-950\/50,
     .bg-slate-900\/90, .bg-slate-900\/80, .bg-slate-900\/60 {
       background-color: var(--inner) !important;
-      border-color: var(--divider) !important;
+      border-color: var(--hair) !important;
     }
-    .bg-slate-900, .bg-slate-900\/70 {
-      background-color: var(--surface) !important;
-      border-color: var(--divider) !important;
-    }
-    .bg-slate-900\/40 { background-color: #fafafa !important; }
+    .bg-slate-900, .bg-slate-900\/70 { background-color: var(--surface) !important; border-color: var(--divider) !important; }
+    .bg-slate-900\/40 { background-color: #f7f7f7 !important; }
 
-    /* Coloured callouts keep their meaning (info / good / bad / warn) */
-    .bg-indigo-950\/20, .bg-indigo-950\/30, .bg-indigo-950\/50,
-    .bg-indigo-500\/10, .bg-indigo-500\/20 {
-      background-color: var(--primary-light) !important;
+    /* Any element (rows, spans, ...) using the old dark tints gets the matching light tint */
+    .bg-indigo-950\/20, .bg-indigo-950\/30, .bg-indigo-950\/50 { background-color: var(--aside-bg) !important; }
+    .bg-emerald-950, .bg-emerald-950\/25, .bg-emerald-950\/60 { background-color: #e8f5e9 !important; }
+    .bg-rose-950\/25, .bg-rose-950\/60 { background-color: #ffebee !important; }
+    .bg-amber-950\/25 { background-color: #fff3e0 !important; }
+    .bg-slate-800 { background-color: var(--code-bg) !important; }
+
+    /* Callouts: a soft tint and a left rule, like a blog aside. Coloured only when meaningful. */
+    div.bg-indigo-950\/20, div.bg-indigo-950\/30, div.bg-indigo-950\/50,
+    div.bg-indigo-500\/10, div.bg-indigo-500\/20, div.bg-cyan-500\/10, div.bg-cyan-500\/20,
+    div.bg-purple-500\/20 {
+      background-color: var(--aside-bg) !important;
+      border-width: 0 0 0 3px !important;
       border-color: var(--primary-line) !important;
+      border-radius: 0 4px 4px 0 !important;
     }
-    .bg-cyan-500\/10, .bg-cyan-500\/20 { background-color: var(--cyan-bg) !important; border-color: var(--cyan-line) !important; }
-    .bg-emerald-950, .bg-emerald-950\/25, .bg-emerald-950\/60,
-    .bg-emerald-500\/10, .bg-emerald-500\/20 { background-color: var(--good-bg) !important; border-color: var(--good-line) !important; }
-    .bg-rose-950\/25, .bg-rose-950\/60, .bg-rose-500\/20 { background-color: var(--bad-bg) !important; border-color: var(--bad-line) !important; }
-    .bg-amber-950\/25, .bg-amber-500\/20 { background-color: var(--warn-bg) !important; border-color: var(--warn-line) !important; }
-    .bg-purple-500\/20 { background-color: var(--purple-bg) !important; border-color: var(--purple-line) !important; }
+    div.bg-emerald-950, div.bg-emerald-950\/25, div.bg-emerald-950\/60 {
+      background-color: var(--good-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--good-line) !important; border-radius: 0 4px 4px 0 !important;
+    }
+    div.bg-rose-950\/25, div.bg-rose-950\/60 {
+      background-color: var(--bad-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--bad-line) !important; border-radius: 0 4px 4px 0 !important;
+    }
+    div.bg-amber-950\/25 {
+      background-color: var(--warn-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--warn-line) !important; border-radius: 0 4px 4px 0 !important;
+    }
+    /* Quiz options / badges keep their full outline */
+    button.bg-emerald-950\/60 { background-color: var(--good-bg) !important; }
+    button.bg-rose-950\/60 { background-color: var(--bad-bg) !important; }
+    span.bg-indigo-500\/10, span.bg-indigo-500\/20, span.bg-cyan-500\/10, span.bg-cyan-500\/20, span.bg-purple-500\/20 {
+      background-color: var(--primary-light) !important; border-color: var(--primary-line) !important;
+    }
+    span.bg-emerald-500\/10, span.bg-emerald-500\/20 { background-color: #e8f5e9 !important; border-color: var(--good-line) !important; }
+    span.bg-rose-500\/20 { background-color: #ffebee !important; border-color: var(--bad-line) !important; }
+    span.bg-amber-500\/20 { background-color: #fff3e0 !important; border-color: var(--warn-line) !important; }
+    a.bg-indigo-500\/10 { background: none !important; border: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+    a.bg-indigo-500\/10 span { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Page badges ("Page 1") become plain muted text */
+    span.bg-slate-800 { background: none !important; border: none !important; color: var(--muted) !important; padding-left: 0 !important; padding-right: 0 !important; }
 
     /* ---------- Borders ---------- */
     .border-slate-800, .border-slate-800\/90, .border-slate-800\/80, .border-slate-800\/60,
     .border-slate-800\/50, .border-slate-700 { border-color: var(--divider) !important; }
-    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) { border-color: var(--divider) !important; }
-    .border-indigo-500\/20, .border-indigo-500\/30, .border-indigo-500\/40 { border-color: var(--primary-line) !important; }
-    .border-cyan-500\/30, .border-cyan-500\/40 { border-color: var(--cyan-line) !important; }
+    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) { border-color: var(--hair) !important; }
+    .border-indigo-500\/20, .border-indigo-500\/30, .border-indigo-500\/40,
+    .border-cyan-500\/30, .border-cyan-500\/40, .border-purple-500\/30 { border-color: var(--primary-line) !important; }
     .border-emerald-500\/30, .border-emerald-500\/40, .border-emerald-700\/40, .border-emerald-400\/30 { border-color: var(--good-line) !important; }
     .border-amber-500\/30, .border-amber-500\/40 { border-color: var(--warn-line) !important; }
     .border-rose-500\/30 { border-color: var(--bad-line) !important; }
-    .border-purple-500\/30 { border-color: var(--purple-line) !important; }
-    .border-indigo-500 { border-color: var(--primary) !important; }
-    .border-cyan-500 { border-color: #00acc1 !important; }
+    .border-indigo-500, .border-cyan-500 { border-color: var(--primary) !important; }
     .border-emerald-500 { border-color: #43a047 !important; }
     .border-rose-500 { border-color: #e53935 !important; }
-
-    .hover\:border-indigo-500:hover, .hover\:border-indigo-400:hover, .hover\:border-indigo-500\/50:hover { border-color: var(--primary) !important; }
+    .hover\:border-indigo-500:hover, .hover\:border-indigo-400:hover, .hover\:border-indigo-500\/50:hover,
+    .hover\:border-cyan-500\/50:hover { border-color: var(--primary) !important; }
     .hover\:border-emerald-500\/50:hover, .hover\:border-emerald-400:hover { border-color: #43a047 !important; }
     .hover\:border-rose-500\/50:hover { border-color: #e53935 !important; }
     .hover\:border-amber-500\/50:hover { border-color: #ffb300 !important; }
-    .hover\:border-cyan-500\/50:hover { border-color: #00acc1 !important; }
     .hover\:border-slate-700:hover { border-color: rgba(0,0,0,.3) !important; }
-    .focus\:border-indigo-500:focus, .focus\:border-indigo-400:focus { border-color: var(--primary) !important; }
-    .focus\:border-cyan-400:focus { border-color: #00acc1 !important; }
+    .focus\:border-indigo-500:focus, .focus\:border-indigo-400:focus, .focus\:border-cyan-400:focus { border-color: var(--primary) !important; }
 
-    /* ---------- Hover backgrounds ---------- */
     .hover\:bg-slate-800\/70:hover, .hover\:bg-slate-800\/50:hover { background-color: var(--primary-light) !important; }
-    .hover\:bg-indigo-500\/20:hover { background-color: var(--primary-line) !important; }
-    .hover\:bg-cyan-500\/20:hover { background-color: #b2ebf2 !important; }
+    .hover\:bg-indigo-500\/20:hover, .hover\:bg-cyan-500\/20:hover { background-color: var(--primary-line) !important; }
 
-    /* ---------- Buttons ---------- */
-    .bg-indigo-600 { background-color: var(--primary) !important; box-shadow: var(--shadow-1); }
+    /* ---------- Buttons: flat Material ---------- */
+    button { font-weight: 500; letter-spacing: .1px; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .bg-indigo-600, .bg-cyan-600 { background-color: var(--primary) !important; }
     .bg-indigo-600, .bg-indigo-600 *, .bg-cyan-600, .bg-cyan-600 *, .bg-emerald-600, .bg-emerald-600 * { color: #fff !important; }
-    .hover\:bg-indigo-500:hover { background-color: var(--primary-dark) !important; }
-    .bg-cyan-600 { background-color: var(--cyan) !important; box-shadow: var(--shadow-1); }
-    .hover\:bg-cyan-500:hover { background-color: #006064 !important; }
-    .bg-emerald-600 { background-color: var(--good) !important; box-shadow: var(--shadow-2); }
-    .bg-slate-800 { background-color: var(--code-bg) !important; border-color: var(--divider) !important; }
-    .hover\:bg-slate-700:hover { background-color: #cfd8dc !important; }
-    button { font-weight: 500; }
-    button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .hover\:bg-indigo-500:hover, .hover\:bg-cyan-500:hover { background-color: var(--primary-dark) !important; }
+    .bg-emerald-600 { background-color: #388e3c !important; box-shadow: var(--shadow-2); }
+    button.bg-slate-800, button.bg-slate-950, button.bg-slate-900 {
+      background-color: #fff !important;
+      border: 1px solid rgba(0,0,0,.2) !important;
+      color: var(--fg) !important;
+    }
+    button.bg-slate-800:hover, button.bg-slate-950:hover, button.bg-slate-900:hover,
+    .hover\:bg-slate-700:hover { background-color: #f0f0f0 !important; }
 
     /* ---------- Inputs ---------- */
     input:not([type="range"]), textarea, select {
       background-color: #fff !important;
       color: var(--fg) !important;
-      border-color: #bdbdbd !important;
+      border-color: rgba(0,0,0,.25) !important;
     }
     input:not([type="range"]):focus { outline: none; box-shadow: 0 0 0 1px var(--primary); }
-    .accent-indigo-500 { accent-color: var(--accent); }
+    .accent-indigo-500 { accent-color: var(--primary); }
 
-    /* ---------- App bar (sticky header) ---------- */
+    /* ---------- App bar: slim, flat, indigo ---------- */
     header.sticky.top-0 {
       background-color: var(--primary) !important;
-      background-image: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
-      border-bottom: none !important;
-      box-shadow: var(--shadow-2);
+      background-image: none !important;
+      border: none !important;
+      box-shadow: var(--shadow-1);
       backdrop-filter: none;
     }
+    header.sticky > div.max-w-5xl { max-width: 1140px; height: 56px; }
     header.sticky .text-white, header.sticky .text-slate-100, header.sticky .text-slate-200 { color: #fff !important; }
-    header.sticky .text-slate-300, header.sticky .text-slate-400, header.sticky .text-slate-500 { color: rgba(255,255,255,.85) !important; }
+    header.sticky .text-slate-300, header.sticky .text-slate-400, header.sticky .text-slate-500 { color: rgba(255,255,255,.8) !important; }
     header.sticky .hover\:text-white:hover { color: #fff !important; }
+    header.sticky .bg-gradient-to-br, header.sticky .truncate .rounded-full, header.sticky #print-btn, header.sticky #theme-toggle-btn { display: none !important; }
+    header.sticky .truncate p { display: none; }
+    header.sticky .truncate span.font-bold { font-size: 1.05rem; font-weight: 500; letter-spacing: .1px; }
     header.sticky [class*="bg-slate-9"] {
       background-color: rgba(255,255,255,.14) !important;
-      border-color: rgba(255,255,255,.28) !important;
+      border-color: transparent !important;
     }
-    header.sticky .hover\:border-slate-700:hover { border-color: rgba(255,255,255,.6) !important; }
-    header.sticky input {
-      background-color: rgba(255,255,255,.16) !important;
-      color: #fff !important;
-      border-color: rgba(255,255,255,.35) !important;
+    header.sticky nav[aria-label="View Switcher"] { background: transparent !important; border: none !important; padding: 0; gap: 2px; }
+    header.sticky .view-tab {
+      border-radius: 0 !important; white-space: nowrap; font-size: .875rem; font-weight: 500;
+      color: rgba(255,255,255,.78) !important; background: transparent !important; box-shadow: none;
     }
-    header.sticky input::placeholder { color: rgba(255,255,255,.75); }
-    header.sticky input:focus { border-color: #fff !important; box-shadow: none; background-color: rgba(255,255,255,.24) !important; }
-    header.sticky > div.max-w-5xl { max-width: 84rem; }
-    header.sticky .view-tab { border-radius: 4px !important; letter-spacing: .2px; white-space: nowrap; font-size: .8rem; }
-    header.sticky #global-search { width: 12rem; }
-    header.sticky .truncate .rounded-full { display: none !important; }
-    header.sticky #print-btn { display: none !important; }
-    @media (min-width: 1360px) { header.sticky #print-btn { display: inline-flex !important; } }
-    header.sticky .view-tab:hover { background-color: rgba(255,255,255,.16); }
-    header.sticky .view-tab.bg-indigo-600 {
-      background-color: #fff !important;
-      color: var(--primary-dark) !important;
+    header.sticky nav .view-tab { height: 56px; padding: 0 14px; }
+    header.sticky .view-tab:hover { background-color: rgba(255,255,255,.1) !important; color: #fff !important; }
+    header.sticky .view-tab.bg-indigo-600, header.sticky .view-tab.bg-indigo-600 * {
+      color: #fff !important; background: transparent !important;
       box-shadow: inset 0 -3px 0 var(--accent);
     }
-    header.sticky .bg-gradient-to-br {
-      background-image: none !important;
-      background-color: var(--accent) !important;
-      box-shadow: var(--shadow-1) !important;
-      border-radius: 50% !important;
+    header.sticky input {
+      background-color: rgba(255,255,255,.16) !important; color: #fff !important; border: 1px solid transparent !important;
     }
-    header.sticky .rounded-full {
-      background-color: rgba(255,255,255,.2) !important;
-      border-color: rgba(255,255,255,.4) !important;
-      color: #fff !important;
-    }
-    header.sticky .view-tab.bg-indigo-600, header.sticky .view-tab.bg-indigo-600 * { color: var(--primary-dark) !important; }
+    header.sticky input::placeholder { color: rgba(255,255,255,.75); }
+    header.sticky input:focus { background-color: rgba(255,255,255,.26) !important; box-shadow: none; }
+    header.sticky #global-search { width: 11rem; }
+    header.sticky .truncate { overflow: visible; white-space: nowrap; flex-shrink: 0; }
+    span.bg-slate-800 { white-space: nowrap; }
+    header.sticky > div.bg-slate-900\/60 { background-color: rgba(0,0,0,.12) !important; border: none !important; }
 
-    /* ---------- Sidebar (syllabus map) ---------- */
+    /* ---------- Page layout: sticky contents + reading column ---------- */
+    #app-body > div.max-w-4xl { max-width: 56rem; padding-top: 2rem; }
+    @media (min-width: 1100px) {
+      #app-body > div.max-w-4xl {
+        max-width: 1140px !important;
+        display: grid !important;
+        grid-template-columns: 220px minmax(0, 1fr);
+        column-gap: 3rem;
+      }
+      aside#sidebar-nav { display: block !important; margin: 0 !important; width: auto !important; }
+      #mobile-menu-btn { display: none !important; }
+    }
+
+    /* Contents (sidebar) */
     aside#sidebar-nav > div {
-      background-color: var(--surface) !important;
-      border: none !important;
-      box-shadow: var(--shadow-1) !important;
-      border-radius: 4px !important;
+      background: transparent !important; border: none !important; box-shadow: none !important;
+      padding: 0 !important; top: 5.5rem !important;
     }
-    .toc-link { transition: background-color .15s, color .15s; border-left: 3px solid transparent; }
-    .toc-link:hover { border-left-color: var(--accent); }
+    #sidebar-nav > div > div:first-child p, #sidebar-nav > div > div:first-child span + span { display: none; }
+    #sidebar-nav > div > div:first-child > div { color: var(--muted) !important; margin-bottom: 0; }
+    #sidebar-nav .space-y-1 > div:first-child {
+      font-size: .86rem !important; font-weight: 500 !important; color: var(--fg) !important; padding-left: 0 !important; margin-top: .4rem;
+    }
+    a.toc-link {
+      display: block; font-size: .86rem !important; line-height: 1.45; color: var(--muted) !important;
+      border-left: 2px solid var(--divider); border-radius: 0 !important; padding: .32rem .75rem !important; background: none !important;
+    }
+    a.toc-link:hover { color: var(--primary) !important; border-left-color: var(--primary); background: none !important; }
+    a.toc-link.active { color: var(--primary-dark) !important; border-left-color: var(--accent); font-weight: 500; }
 
-    /* ---------- Hero (indigo banner) ---------- */
-    main > section:first-of-type {
-      background-color: var(--primary) !important;
-      background-image: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
-      border: none !important;
-      box-shadow: var(--shadow-2) !important;
-      border-radius: 4px !important;
-      padding: 2rem !important;
-    }
-    main > section:first-of-type [class*="text-slate-"],
-    main > section:first-of-type [class*="text-indigo-"],
-    main > section:first-of-type [class*="text-cyan-"],
-    main > section:first-of-type [class*="text-emerald-"] { color: rgba(255,255,255,.88) !important; }
-    main > section:first-of-type .text-white,
-    main > section:first-of-type h1,
-    main > section:first-of-type strong { color: #fff !important; }
-    main > section:first-of-type a { color: #fff !important; text-decoration: underline; }
-    main > section:first-of-type .bg-clip-text {
-      background: none !important;
-      color: #ff80ab !important;
-      -webkit-text-fill-color: #ff80ab !important;
-    }
-    main > section:first-of-type [class*="bg-slate-9"] {
-      background-color: rgba(255,255,255,.12) !important;
-      border-color: rgba(255,255,255,.3) !important;
-    }
-    main > section:first-of-type .rounded-full {
-      background-color: rgba(255,255,255,.18) !important;
-      border-color: rgba(255,255,255,.4) !important;
-      color: #fff !important;
-      border-radius: 16px !important;
-    }
-
-    /* ---------- Cards ---------- */
-    article.searchable-card,
-    section.searchable-card,
-    #section-labs > section,
-    #flashcards-quiz > div {
-      background-color: var(--surface) !important;
-      border: none !important;
-      box-shadow: var(--shadow-1) !important;
-      border-radius: 4px !important;
-      padding: 1.75rem !important;
-    }
-    div.searchable-card.bg-slate-900\/90 {
-      background-color: var(--surface) !important;
-      border: 1px solid var(--divider) !important;
+    /* The reading "paper" */
+    main.flex-1 {
+      background: var(--surface);
       box-shadow: var(--shadow-1);
+      border-radius: 4px;
+      padding: 1.75rem 1.25rem 2.5rem;
     }
+    @media (min-width: 768px) { main.flex-1 { padding: 3.25rem 3.75rem 4rem; } }
 
-    /* Flashcard deck: stay at the top and follow the reader while the quiz scrolls */
-    #flashcards-quiz > div:first-child {
-      align-self: start;
-      justify-content: flex-start !important;
-    }
-    @media (min-width: 1024px) {
-      #flashcards-quiz > div:first-child { position: sticky; top: 6rem; }
-    }
-    #fc-card-box { min-height: 220px !important; border-width: 2px; border-color: var(--primary-line) !important; background-color: #fff !important; box-shadow: var(--shadow-1); }
-    #fc-card-box:hover { border-color: var(--primary) !important; box-shadow: var(--shadow-2); }
+    /* Post header (replaces the old banner) */
+    .post-head { margin-bottom: .5rem; }
+    .post-kicker { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--primary); font-weight: 500; margin: 0 0 .75rem; }
+    .post-head h1 { font-size: 2.5rem; line-height: 1.2; font-weight: 500; color: var(--fg); margin: 0 0 1.25rem; letter-spacing: -.01em; }
+    .post-lede { font-size: 1.15rem; line-height: 1.75; color: var(--body); margin: 0; }
+    .post-lede a, #app-body main p a, #app-body main li a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .post-lede a:hover, #app-body main p a:hover { color: var(--primary-dark); text-decoration-thickness: 2px; }
+    @media (max-width: 640px) { .post-head h1 { font-size: 1.9rem; } }
 
-    /* Section headings: pink accent bar, like the DSA notes */
-    #app-body main h2 { color: var(--primary-dark) !important; }
-    #app-body main h2::before {
-      content: "";
-      display: inline-block;
-      width: 4px; height: 1.05em;
-      margin-right: 10px;
-      vertical-align: -0.12em;
-      background: var(--accent);
-      border-radius: 2px;
+    /* ---------- Sections and articles: headings + hairlines, no card per section ---------- */
+    #app-body main h2 { color: var(--fg) !important; font-size: 1.95rem !important; font-weight: 500 !important; line-height: 1.3; letter-spacing: -.005em; }
+    @media (max-width: 640px) { #app-body main h2 { font-size: 1.6rem !important; } }
+    #app-body main div.border-b.border-slate-800 { border-bottom: 1px solid var(--divider) !important; padding-bottom: 1rem !important; }
+    #app-body main div.border-b.border-slate-800 > div > span:first-child { color: var(--primary) !important; }
+
+    article.searchable-card, section.searchable-card {
+      background: transparent !important; box-shadow: none !important; border: none !important;
+      border-top: 1px solid var(--hair) !important; border-radius: 0 !important; padding: 2.25rem 0 0 !important;
     }
-    #app-body main article > div:first-child h3 { color: var(--primary-dark) !important; }
-    #app-body main div.border-b.border-slate-800 { border-bottom: 2px solid var(--primary-light) !important; }
+    #app-body main article > div:first-child h3 { color: var(--fg) !important; font-size: 1.45rem !important; font-weight: 500 !important; line-height: 1.35; }
     #app-body main strong { font-weight: 700; color: var(--fg); }
-    #app-body main section:first-of-type strong { color: #fff; }
+    #app-body main em { color: inherit; }
 
-    /* Roadmap check-chips + small tags */
-    .font-mono.text-slate-400 { letter-spacing: .2px; }
+    /* Interactive widgets keep a quiet frame */
+    #section-labs > section, #flashcards-quiz > div {
+      background: #fff !important; border: 1px solid var(--divider) !important; box-shadow: none !important;
+      border-radius: 4px !important; padding: 1.5rem !important;
+    }
+    div.searchable-card.bg-slate-900\/90 { background: #fff !important; border: 1px solid var(--divider) !important; box-shadow: none; }
+    div.searchable-card.bg-slate-900\/90 > button:hover { background-color: var(--inner) !important; }
+
+    /* Flashcards above the quiz, one column: the reading column is too narrow for two */
+    #flashcards-quiz { grid-template-columns: minmax(0, 1fr) !important; }
+    #flashcards-quiz > div:first-child { justify-content: flex-start !important; }
+    #fc-card-box { min-height: 220px !important; border-width: 1px !important; border-color: var(--divider) !important; background-color: #fff !important; }
+    #fc-card-box:hover { border-color: var(--primary) !important; box-shadow: var(--shadow-1); }
 
     /* ---------- Code ---------- */
     code {
@@ -308,73 +311,55 @@
       padding: 1px 6px;
       border-radius: 4px;
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: .88em;
+      font-size: .86em;
     }
     pre {
-      background-color: var(--code-bg) !important;
+      background-color: transparent !important;
       color: #263238 !important;
-      border-left: 4px solid var(--primary);
-      border-radius: 0 !important;
-      font-size: 13.5px !important;
-      line-height: 1.65 !important;
+      font-size: 14px !important;
+      line-height: 1.7 !important;
     }
     pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
     pre .text-slate-200, pre .text-slate-300 { color: #263238 !important; }
-    div:has(> pre) { background-color: var(--code-bg) !important; border-color: var(--divider) !important; box-shadow: var(--shadow-1); }
-    div:has(> pre) > div:first-child { background-color: var(--primary-light) !important; border-color: var(--primary-line) !important; }
+    div:has(> pre) { background-color: var(--code-bg) !important; border: 1px solid var(--hair) !important; box-shadow: none; }
+    div:has(> pre) > div:first-child { background-color: transparent !important; border-bottom: 1px solid var(--hair) !important; }
+    div:has(> pre) > div:first-child span { color: var(--muted) !important; font-weight: 400 !important; }
 
     /* ---------- Tables ---------- */
     table { border-collapse: collapse; }
     table th {
-      background-color: var(--primary-light) !important;
+      background-color: var(--inner) !important;
       color: var(--primary-dark) !important;
       font-weight: 500 !important;
-      font-size: 0.78rem !important;
+      font-size: 0.76rem !important;
       text-transform: uppercase;
-      letter-spacing: .6px;
+      letter-spacing: .08em;
+      border-bottom: 2px solid var(--primary-line) !important;
     }
-    table td { padding: .85rem 1rem !important; vertical-align: top; }
-    table tbody tr:hover td { background-color: rgba(63,81,181,.05); }
+    table td { padding: .9rem 1rem !important; vertical-align: top; }
+    table tbody tr:hover td { background-color: rgba(63,81,181,.04); }
 
     /* ---------- Math ---------- */
-    .math-font {
-      font-family: 'Cambria Math', 'Times New Roman', Georgia, serif;
-      letter-spacing: 0.01em;
-    }
+    .math-font { font-family: 'Cambria Math', 'Times New Roman', Georgia, serif; letter-spacing: 0.01em; }
     .matrix-bracket {
-      display: inline-flex;
-      align-items: center;
-      border-left: 1.5px solid var(--fg);
-      border-right: 1.5px solid var(--fg);
-      padding: 4px 10px;
-      position: relative;
-      margin: 0 4px;
-      vertical-align: middle;
+      display: inline-flex; align-items: center;
+      border-left: 1.5px solid var(--fg); border-right: 1.5px solid var(--fg);
+      padding: 4px 10px; position: relative; margin: 0 4px; vertical-align: middle;
     }
     .matrix-bracket::before, .matrix-bracket::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 5px;
-      border-top: 1.5px solid var(--fg);
-      border-bottom: 1.5px solid var(--fg);
+      content: ''; position: absolute; top: 0; bottom: 0; width: 5px;
+      border-top: 1.5px solid var(--fg); border-bottom: 1.5px solid var(--fg);
     }
     .matrix-bracket::before { left: 0; }
     .matrix-bracket::after { right: 0; }
-    .matrix-grid {
-      display: inline-grid;
-      gap: 4px 12px;
-      text-align: center;
-      font-family: 'Roboto Mono', ui-monospace, monospace;
-      font-size: 0.9rem;
-    }
-
-    /* Lab cell highlights */
+    .matrix-grid { display: inline-grid; gap: 4px 12px; text-align: center; font-family: 'Roboto Mono', ui-monospace, monospace; font-size: 0.9rem; }
     .cell-highlight-row { background-color: var(--primary-light) !important; border-color: var(--primary) !important; }
-    .cell-highlight-col { background-color: var(--cyan-bg) !important; border-color: var(--cyan) !important; }
+    .cell-highlight-col { background-color: #fce4ec !important; border-color: var(--accent) !important; }
     .cell-highlight-out { background-color: var(--good-bg) !important; border-color: var(--good) !important; }
 
-    /* ---------- Scrollbars ---------- */
+    /* ---------- Footer & scrollbars ---------- */
+    footer.border-t { background: transparent !important; border-color: var(--divider) !important; }
+    footer .text-slate-400 { color: var(--muted) !important; }
     .code-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
     .code-scroll::-webkit-scrollbar-thumb { background: var(--primary-line); border-radius: 4px; }
 
@@ -382,6 +367,7 @@
       .no-print { display: none !important; }
       .print-break { page-break-before: always; }
       body#app-body { background: #fff !important; }
+      main.flex-1 { box-shadow: none; padding: 0; }
     }
   </style>
 </head>
@@ -422,9 +408,6 @@
           <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           <button id="clear-search-btn" type="button" class="hidden absolute right-2 top-1.5 text-slate-400 hover:text-white text-xs" title="Clear search">&times;</button>
         </div>
-        <button id="print-btn" type="button" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white hover:border-slate-700 transition">
-          <span>🖨️</span><span>Print</span>
-        </button>
       </div>
     </div>
 
@@ -451,7 +434,7 @@
       <div class="sticky top-24 space-y-5 bg-slate-900/70 border border-slate-800/90 rounded-2xl p-4 max-h-[calc(100vh-7rem)] overflow-y-auto code-scroll">
         <div>
           <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-indigo-400 mb-2">
-            <span>Course Syllabus Map</span>
+            <span>Contents</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/30">12/12 Pages</span>
           </div>
           <p class="text-[11px] text-slate-400 leading-relaxed">
@@ -460,7 +443,7 @@
         </div>
 
         <div class="space-y-1">
-          <div class="text-xs font-bold text-slate-200 px-2 py-1">📘 Lecture 02: Supervised ML</div>
+          <div class="text-xs font-bold text-slate-200 px-2 py-1">Lecture 02: Supervised ML</div>
           <a href="#lec2-paradigm" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">2.1 The Supervised ML Paradigm</a>
           <a href="#lec2-notation" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">2.2 Core Notation &amp; Examples</a>
           <a href="#lec2-vs" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">2.3 Image Classif. vs. Language Modeling</a>
@@ -469,7 +452,7 @@
         </div>
 
         <div class="space-y-1">
-          <div class="text-xs font-bold text-slate-200 px-2 py-1">📐 Lecture 03: Linear Algebra</div>
+          <div class="text-xs font-bold text-slate-200 px-2 py-1">Lecture 03: Linear Algebra</div>
           <a href="#lec3-recap-vectors" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">3.1 Recap &amp; Vectors (1-Idx vs 0-Idx)</a>
           <a href="#lec3-inner-pytorch" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">3.2 Inner Product &amp; PyTorch Vectors</a>
           <a href="#lec3-matrices" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white hover:bg-slate-800/70 transition">3.3 Matrices, Transpose &amp; Slices</a>
@@ -482,7 +465,7 @@
         </div>
 
         <div class="space-y-1">
-          <div class="text-xs font-bold text-slate-200 px-2 py-1">🧪 Interactive Labs &amp; Prep</div>
+          <div class="text-xs font-bold text-slate-200 px-2 py-1">Interactive Labs &amp; Prep</div>
           <a href="#interactive-labs" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-cyan-400 hover:text-white hover:bg-slate-800/70 transition">4.1 Live Matrix &amp; Loss Simulators</a>
           <a href="#interview-prep" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-emerald-400 hover:text-white hover:bg-slate-800/70 transition">5.1 ML Interview Questions &amp; Drills</a>
           <a href="#flashcards-quiz" class="toc-link block px-2.5 py-1.5 rounded-lg text-xs text-amber-400 hover:text-white hover:bg-slate-800/70 transition">5.2 Active Recall Flashcards &amp; Quiz</a>
@@ -494,43 +477,16 @@
     <!-- Main Content Column -->
     <main class="flex-1 min-w-0 space-y-10">
 
-      <!-- Hero Banner -->
-      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950/60 to-slate-900 border border-indigo-500/30 p-6 sm:p-8 shadow-2xl">
-        <div class="relative z-10 space-y-4">
-          <div class="flex flex-wrap items-center gap-2 text-xs">
-            <span class="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-semibold">CMU 10-202 • Spring 2026</span>
-            <span class="px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold">Instructor: Prof. Zico Kolter</span>
-            <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold">100% Unabridged Notes + Interview Prep</span>
-          </div>
-          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-            Introduction to Modern AI: <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-400">Supervised Machine Learning &amp; Linear Algebra</span>
-          </h1>
-          <p class="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
-            A comprehensive, GitHub-ready technical companion covering <strong>Lecture 02 (Introduction to Supervised Machine Learning)</strong> and <strong>Lecture 03 (Linear Algebra &amp; PyTorch Foundations)</strong> from <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline hover:text-cyan-300">modernaicourse.org</a>. Includes every diagram, equation, 1-indexed vs. 0-indexed convention, matrix multiplication interpretation, and PyTorch code snippet from the handwritten notes—augmented with interactive calculators and technical interview preparation.
-          </p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
-              <div class="text-xs text-slate-400">Lecture 01 Context</div>
-              <div class="text-sm font-bold text-white mt-0.5">Brief History of AI</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Symbolic AI → Connectionism → LLMs</div>
-            </div>
-            <div class="bg-slate-900/80 border border-indigo-500/30 rounded-xl p-3">
-              <div class="text-xs text-indigo-300">Lecture 02 Core</div>
-              <div class="text-sm font-bold text-white mt-0.5">Supervised Paradigm</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Model, Loss, Optimization, Generalization</div>
-            </div>
-            <div class="bg-slate-900/80 border border-cyan-500/30 rounded-xl p-3">
-              <div class="text-xs text-cyan-300">Lecture 03 Core</div>
-              <div class="text-sm font-bold text-white mt-0.5">Linear Algebra &amp; PyTorch</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Vectors, Matrices, Ax, xᵀA, AB, AX vs XB</div>
-            </div>
-            <div class="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-3">
-              <div class="text-xs text-emerald-300">Interview Ready</div>
-              <div class="text-sm font-bold text-white mt-0.5">20 Q&amp;As + Interactive Labs</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Complexity, PyTorch Gotchas &amp; Quizzes</div>
-            </div>
-          </div>
-        </div>
+      <!-- Post header -->
+      <section class="post-head">
+        <p class="post-kicker">CMU 10-202 &middot; Introduction to Modern AI &middot; Lectures 2 &amp; 3</p>
+        <h1>Supervised learning and linear algebra</h1>
+        <p class="post-lede">
+          My notes on the second and third lectures of Zico Kolter&rsquo;s
+          <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer">Introduction to Modern AI</a>
+          at CMU (Spring 2026). They cover the supervised learning recipe behind modern AI systems, then the linear algebra and PyTorch you need to work with it.
+          The diagrams and equations follow the handwritten course notes. At the end there are a few interactive demos and a set of interview-style questions for practice.
+        </p>
       </section>
 
       <!-- ===================================================================== -->
@@ -543,28 +499,8 @@
             <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Introduction to Supervised Machine Learning</h2>
           </div>
           <a href="https://www.youtube.com/watch?v=xIQkf7ZGQhM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs font-semibold text-indigo-300 hover:bg-indigo-500/20 transition">
-            <span>▶ Watch Official Lecture 2 Video (YouTube)</span>
+            <span>Watch Official Lecture 2 Video (YouTube) &nearr;</span>
           </a>
-        </div>
-
-        <!-- Lecture 2 Roadmap Badges -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-            <span class="text-emerald-400 font-bold">✓</span>
-            <span class="text-xs font-semibold text-slate-200">1. The Supervised ML Paradigm</span>
-          </div>
-          <div class="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-            <span class="text-emerald-400 font-bold">✓</span>
-            <span class="text-xs font-semibold text-slate-200">2. Formal Notation</span>
-          </div>
-          <div class="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-            <span class="text-emerald-400 font-bold">✓</span>
-            <span class="text-xs font-semibold text-slate-200">3. The Three Ingredients of ML</span>
-          </div>
-          <div class="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-            <span class="text-emerald-400 font-bold">✓</span>
-            <span class="text-xs font-semibold text-slate-200">4. Generalisation &amp; Downstream</span>
-          </div>
         </div>
 
         <!-- 2.1 The Supervised ML Paradigm -->
@@ -831,7 +767,7 @@
 
             <!-- Box from Page 3: Key Modern AI Observation -->
             <div class="bg-amber-950/25 border border-amber-500/40 rounded-xl p-4 space-y-1.5">
-              <div class="text-xs font-bold uppercase tracking-wider text-amber-300">⚡ Crucial Modern AI Insight (Page 3 Highlight)</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-amber-300">Crucial Modern AI Insight (Page 3 Highlight)</div>
               <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
                 In modern AI, the <strong>loss function</strong> and <strong>optimization procedure</strong> are almost always fixed across tasks: virtually every modern system uses <strong>Cross-Entropy Loss</strong> and some flavor of <strong>Gradient Descent</strong> (such as Stochastic Gradient Descent or Adam). <strong>It is the Model Architecture (Model Class)</strong>—and the training data—that varies!
               </p>
@@ -879,7 +815,7 @@
             <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Linear Algebra &amp; PyTorch Foundations</h2>
           </div>
           <a href="https://www.youtube.com/watch?v=tlbLH77GFLQ" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/20 transition">
-            <span>▶ Watch Official Lecture 3 Video (YouTube)</span>
+            <span>Watch Official Lecture 3 Video (YouTube) &nearr;</span>
           </a>
         </div>
 
@@ -1488,7 +1424,7 @@ print(1 * A[0, :] + 2 * A[1, :])                    # tensor([11, 11, 18])  (Int
         <article id="lec3-implications" class="searchable-card bg-slate-900/70 border-2 border-indigo-500/40 rounded-2xl p-6 space-y-5 shadow-xl">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">★ Core Deep Learning &amp; Transformer Insight</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Core Deep Learning &amp; Transformer Insight</span>
               <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">3.8 Structural Implications: Left-Multiplication (<span class="math-font">AX</span>) vs. Right-Multiplication (<span class="math-font">XB</span>)</h3>
             </div>
             <span class="text-xs px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Page 11</span>
@@ -1855,7 +1791,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
                 <button type="button" id="fc-flip-btn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition">Flip Card</button>
                 <button type="button" id="fc-next-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">Next &rarr;</button>
               </div>
-              <button type="button" id="fc-shuffle-btn" class="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 transition">🔀 Shuffle</button>
+              <button type="button" id="fc-shuffle-btn" class="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 transition">Shuffle</button>
             </div>
           </div>
 
@@ -1920,7 +1856,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
   <footer class="border-t border-slate-800/80 bg-slate-950 py-8 mt-12 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <div>
-        <strong>CMU 10-202: Introduction to Modern AI</strong> — Lectures 02 &amp; 03 Technical Study &amp; Interview Guide. Built for GitHub Pages / Repository hosting.
+        <strong>CMU 10-202: Introduction to Modern AI</strong> — Lectures 2 &amp; 3: study notes and interview practice.
       </div>
       <div class="flex items-center gap-4">
         <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">modernaicourse.org</a>
@@ -2348,9 +2284,9 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
 
         if (statusEl) {
           if (mode === 'row1') {
-            statusEl.innerHTML = '🔍 <strong>Notice:</strong> We only changed <strong>Row 1 of X</strong>! In <strong class="text-emerald-300">X @ B</strong>, ONLY Row 1 changed (Row 2 stayed <code>[10, 12]</code>). In <strong class="text-rose-300">A @ X</strong>, BOTH Row 1 and Row 2 changed because left-multiplication mixes all rows of X!';
+            statusEl.innerHTML = '<strong>Notice:</strong> We only changed <strong>Row 1 of X</strong>! In <strong class="text-emerald-300">X @ B</strong>, ONLY Row 1 changed (Row 2 stayed <code>[10, 12]</code>). In <strong class="text-rose-300">A @ X</strong>, BOTH Row 1 and Row 2 changed because left-multiplication mixes all rows of X!';
           } else if (mode === 'swap') {
-            statusEl.innerHTML = '🔍 <strong>Notice:</strong> We swapped Row 1 and Row 2 of X! In <strong class="text-emerald-300">X @ B</strong>, the output rows simply swapped in the exact same way (permutation equivariance). In <strong class="text-rose-300">A @ X</strong>, the numbers completely changed!';
+            statusEl.innerHTML = '<strong>Notice:</strong> We swapped Row 1 and Row 2 of X! In <strong class="text-emerald-300">X @ B</strong>, the output rows simply swapped in the exact same way (permutation equivariance). In <strong class="text-rose-300">A @ X</strong>, the numbers completely changed!';
           } else {
             statusEl.innerHTML = 'Baseline state: Observe <code class="text-white">X</code>, left-multiplied <code class="text-indigo-300">A @ X</code> (row mixing), and right-multiplied <code class="text-emerald-300">X @ B</code> (independent row transformation).';
           }
@@ -2758,6 +2694,26 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
         });
       }
       renderQuiz();
+    })();
+  </script>
+  <script>
+    // Highlight the current section in the Contents sidebar
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      var links = Array.prototype.slice.call(document.querySelectorAll('a.toc-link'));
+      var byId = {};
+      links.forEach(function (a) {
+        var el = document.getElementById(a.getAttribute('href').slice(1));
+        if (el) byId[el.id] = { link: a, el: el };
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) { l.classList.remove('active'); });
+          byId[e.target.id].link.classList.add('active');
+        });
+      }, { rootMargin: '-15% 0px -75% 0px' });
+      Object.keys(byId).forEach(function (id) { io.observe(byId[id].el); });
     })();
   </script>
 </body>
