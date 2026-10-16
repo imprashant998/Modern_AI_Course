@@ -28,8 +28,9 @@
   </script>
   <style>
     /* ==========================================================================
-       Reading-first Material theme (light only)
-       Indigo primary, pink accent (used sparingly), grey page, white paper.
+       Same Material theme as the DSA notes (light only)
+       Indigo gradient app bar, pink heading bars, grey page, white shadow cards,
+       callouts with a coloured left border, uppercase indigo table headers.
        The markup uses dark-slate Tailwind utilities; they are re-mapped below
        so the HTML and JS can stay as they are.
        ========================================================================== */
@@ -37,318 +38,295 @@
       --primary: #3f51b5;
       --primary-dark: #303f9f;
       --primary-light: #e8eaf6;
-      --primary-line: #c5cae9;
       --accent: #ff4081;
       --bg: #f5f5f5;
       --surface: #ffffff;
-      --inner: #fafafa;
       --fg: rgba(0, 0, 0, 0.87);
-      --body: rgba(0, 0, 0, 0.80);
-      --muted: rgba(0, 0, 0, 0.58);
+      --muted: rgba(0, 0, 0, 0.60);
       --divider: rgba(0, 0, 0, 0.12);
-      --hair: rgba(0, 0, 0, 0.08);
-      --code-bg: #f3f5f7;
-      --good: #2e7d32;  --good-bg: #f1f8f2;  --good-line: #a5d6a7;
-      --bad:  #c62828;  --bad-bg:  #fdf3f3;  --bad-line:  #ef9a9a;
-      --warn: #a65f00;  --warn-bg: #fffaf0;  --warn-line: #ffd180;
-      --aside-bg: #f6f7fb;
+      --code-bg: #eceff1;
+      --good: #2e7d32;  --good-bg: #e8f5e9;
+      --bad:  #c62828;  --bad-bg:  #ffebee;
+      --warn: #b26a00;  --warn-bg: #fffde7;  --warn-line: #f9a825;
       --shadow-1: 0 1px 3px rgba(0,0,0,.20), 0 1px 1px rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
       --shadow-2: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     }
 
-    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-    ::selection { background: var(--primary-line); color: var(--fg); }
+    html { font-size: 20px; scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+    ::selection { background: var(--primary); color: #fff; }
 
     body#app-body {
+      margin: 0;
       background: var(--bg) !important;
-      color: var(--body) !important;
+      color: var(--fg) !important;
       font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 17px;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
+      font-size: 1rem;
+      line-height: 1.7;
     }
 
     .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl { border-radius: 4px !important; }
 
-    /* ---------- Text colours: indigo for emphasis, green/amber/red only for meaning ---------- */
-    .text-white, .text-slate-100, .text-slate-200 { color: var(--fg) !important; }
-    .text-slate-300 { color: var(--body) !important; }
+    /* ---------- App bar (same as the DSA notes) ---------- */
+    .appbar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      box-shadow: var(--shadow-2);
+      padding: 1.9rem 1.25rem 2.1rem;
+    }
+    .appbar-inner { max-width: 54rem; margin: 0 auto; }
+    .appbar h1 { font-size: 2.1rem; font-weight: 500; margin: 0 0 .35rem; letter-spacing: .2px; line-height: 1.25; color: #fff; }
+    .appbar .subtitle { color: rgba(255,255,255,.88); margin: 0; font-size: .85rem; line-height: 2; }
+    .tag {
+      display: inline-block; padding: 1px .7rem; border-radius: 16px;
+      background: rgba(255,255,255,.2); color: #fff; font-size: .72rem; font-weight: 500; margin-right: .3rem; line-height: 1.7;
+    }
+    .tag.o { background: #fff; color: var(--primary-dark); }
+
+    /* ---------- Sticky tool bar (view tabs + search): white Material toolbar ---------- */
+    header.sticky.top-0 {
+      background-color: #fff !important; background-image: none !important;
+      border: none !important; box-shadow: var(--shadow-1); backdrop-filter: none;
+    }
+    header.sticky > div.max-w-5xl { max-width: 54rem; height: 2.7rem; padding-left: 1rem; padding-right: 1rem; }
+    header.sticky > div.max-w-5xl > div:first-child { display: none !important; }
+    header.sticky > div.max-w-5xl { justify-content: space-between; }
+    header.sticky #print-btn, header.sticky #theme-toggle-btn { display: none !important; }
+    header.sticky nav[aria-label="View Switcher"] { background: transparent !important; border: none !important; padding: 0; gap: 0; }
+    header.sticky .view-tab {
+      border-radius: 0 !important; white-space: nowrap; font-size: .76rem; font-weight: 500; letter-spacing: .2px;
+      color: var(--muted) !important; background: transparent !important; box-shadow: none; text-transform: uppercase;
+    }
+    header.sticky nav .view-tab { height: 2.7rem; padding: 0 .75rem; }
+    header.sticky .view-tab:hover { background-color: var(--primary-light) !important; color: var(--primary-dark) !important; }
+    header.sticky .view-tab.bg-indigo-600, header.sticky .view-tab.bg-indigo-600 * {
+      color: var(--primary-dark) !important; background: transparent !important;
+      box-shadow: inset 0 -3px 0 var(--accent);
+    }
+    header.sticky input {
+      background-color: #fff !important; color: var(--fg) !important; border: 1px solid rgba(0,0,0,.25) !important;
+      font-size: .8rem;
+    }
+    header.sticky input::placeholder { color: rgba(0,0,0,.5); }
+    header.sticky svg.text-slate-500 { color: rgba(0,0,0,.5) !important; }
+    header.sticky .text-slate-300, header.sticky .text-slate-400 { color: var(--muted) !important; }
+    header.sticky > div.bg-slate-900\/60 { background-color: #fafafa !important; border-color: var(--divider) !important; }
+    header.sticky > div.bg-slate-900\/60 .view-tab { font-size: .72rem; padding: .3rem .6rem; }
+    @media (max-width: 767px) {
+      header.sticky > div.max-w-5xl { height: auto; padding-top: .4rem; padding-bottom: .4rem; }
+    }
+
+    /* ---------- Page: one narrow column on the grey page ---------- */
+    #app-body > div.max-w-4xl {
+      max-width: 54rem !important; padding: 1.5rem 1.25rem 0 !important; gap: 0 !important;
+      display: flex !important; flex-direction: column;
+    }
+    main.flex-1 { background: none; box-shadow: none; padding: 0; }
+    main.flex-1 > * + * { margin-top: 0; }
+    #mobile-menu-btn { display: none !important; }
+
+    /* Contents: a card on narrow screens, a sticky left sidebar on wide ones */
+    aside#sidebar-nav { display: block !important; margin: 0 0 .5rem !important; width: auto !important; }
+    aside#sidebar-nav > div > * { margin: 0 !important; }
+    #sidebar-nav > div > div:first-child p, #sidebar-nav > div > div:first-child span + span { display: none; }
+    #sidebar-nav > div > div:first-child > div { color: var(--fg) !important; font-size: .95rem !important; font-weight: 500 !important; text-transform: none !important; letter-spacing: 0 !important; }
+    #sidebar-nav .space-y-1 > div:first-child {
+      font-size: .8rem !important; font-weight: 500 !important; color: var(--muted) !important; padding: 0 !important;
+      text-transform: uppercase; letter-spacing: .6px;
+    }
+    a.toc-link {
+      display: block; font-size: .82rem !important; line-height: 1.4; color: var(--primary) !important;
+      border-radius: 0 !important; padding: .22rem 0 !important; background: none !important; font-weight: 500;
+    }
+    a.toc-link:hover { text-decoration: underline; background: none !important; }
+
+    @media (max-width: 1199px) {
+      aside#sidebar-nav > div {
+        position: static !important; max-height: none !important; overflow: visible !important;
+        display: grid !important; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .5rem 2rem !important;
+        background: var(--surface) !important; border: none !important; box-shadow: var(--shadow-1) !important;
+        border-radius: 4px !important; padding: .9rem 1.25rem 1rem !important;
+      }
+      #sidebar-nav > div > div:first-child { grid-column: 1 / -1; }
+    }
+
+    @media (min-width: 1200px) {
+      #app-body > div.max-w-4xl {
+        max-width: 76rem !important; display: grid !important;
+        grid-template-columns: 13rem minmax(0, 54rem); column-gap: 5rem; justify-content: center;
+      }
+      .appbar-inner, header.sticky > div.max-w-5xl { max-width: 72rem; }
+      aside#sidebar-nav { margin: 0 !important; }
+      aside#sidebar-nav > div {
+        position: sticky !important; top: 4.5rem !important; max-height: calc(100vh - 6rem) !important; 
+        overflow-y: auto !important; overscroll-behavior: contain;
+        background: transparent !important; border: none !important; box-shadow: none !important;
+        padding: .25rem 1rem 1.5rem 0 !important; display: block !important;
+      }
+      #sidebar-nav > div > div:first-child > div { font-size: .72rem !important; text-transform: uppercase !important; letter-spacing: .6px !important; color: var(--muted) !important; margin-bottom: .5rem !important; }
+      #sidebar-nav .space-y-1 { margin-top: 1.1rem !important; }
+      #sidebar-nav .space-y-1 > div:first-child { font-size: .85rem !important; font-weight: 500 !important; color: var(--fg) !important; text-transform: none; letter-spacing: 0; margin-bottom: .2rem !important; }
+      a.toc-link { border-left: 2px solid var(--divider); padding: .3rem .7rem !important; color: var(--muted) !important; font-weight: 400; }
+      a.toc-link:hover { color: var(--primary) !important; border-left-color: var(--primary); text-decoration: none; }
+      a.toc-link.active { color: var(--primary-dark) !important; border-left-color: var(--accent); font-weight: 500; }
+    }
+
+    /* Intro paragraph */
+    .post-head { margin: 1rem 0 0; }
+    .post-lede { margin: 0; font-size: 1.0625rem; max-width: none; }
+
+    /* ---------- Text colours (indigo for emphasis; green/amber/red only for meaning) ---------- */
+    .text-white, .text-slate-100, .text-slate-200, .text-slate-300 { color: var(--fg) !important; }
     .text-slate-400, .text-slate-500 { color: var(--muted) !important; }
     .text-indigo-300, .text-indigo-400, .text-cyan-300, .text-cyan-400,
     .text-purple-300, .text-purple-400 { color: var(--primary-dark) !important; }
     .text-emerald-200, .text-emerald-300, .text-emerald-400 { color: var(--good) !important; }
     .text-amber-300, .text-amber-400 { color: var(--warn) !important; }
     .text-rose-200, .text-rose-300, .text-rose-400 { color: var(--bad) !important; }
-
     .hover\:text-white:hover:not(.bg-indigo-600) { color: var(--primary) !important; }
     .hover\:text-indigo-300:hover, .hover\:text-cyan-300:hover { color: var(--primary) !important; }
     .placeholder-slate-500::placeholder { color: rgba(0,0,0,.45); }
-    .text-\[11px\] { font-size: 0.8rem !important; line-height: 1.55 !important; }
-    .text-\[10px\] { font-size: 0.74rem !important; line-height: 1.5 !important; }
+    .text-\[11px\] { font-size: 0.74rem !important; line-height: 1.55 !important; }
+    .text-\[10px\] { font-size: 0.68rem !important; line-height: 1.5 !important; }
+    strong { font-weight: 500; }
+    #app-body main strong { font-weight: 700; }
+    #app-body main a { color: var(--primary); }
 
-    /* Small uppercase labels become quiet "kickers" instead of shouting badges */
-    .uppercase.tracking-widest, .uppercase.tracking-wider {
-      font-weight: 500 !important;
-      letter-spacing: .08em !important;
-      font-size: 0.78rem !important;
+    /* Small uppercase labels: quiet kickers */
+    .uppercase.tracking-widest, .uppercase.tracking-wider { font-weight: 500 !important; letter-spacing: .06em !important; font-size: 0.68rem !important; }
+
+    /* ---------- Headings: same pattern as the DSA notes ---------- */
+    #app-body main h2 { color: var(--primary-dark) !important; font-size: 1.65rem !important; font-weight: 500 !important; line-height: 1.3; }
+    #app-body main > div > div.border-b.border-slate-800 {
+      border-bottom: 3px solid var(--primary-light) !important; padding-bottom: .9rem !important; margin-top: 1.5rem;
     }
+    #app-body main div.border-b.border-slate-800 > div > span:first-child { color: var(--accent) !important; }
+    a.bg-indigo-500\/10, a.bg-cyan-500\/10 { background: none !important; border: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+    a.bg-indigo-500\/10 span, a.bg-cyan-500\/10 span { text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ---------- Surfaces ---------- */
-    .bg-slate-950, .bg-slate-950\/90, .bg-slate-950\/80, .bg-slate-950\/60, .bg-slate-950\/50,
-    .bg-slate-900\/90, .bg-slate-900\/80, .bg-slate-900\/60 {
-      background-color: var(--inner) !important;
-      border-color: var(--hair) !important;
+    article.searchable-card, section.searchable-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; }
+    #app-body main article > div:first-child h3 {
+      display: flex; align-items: center; color: var(--primary-dark) !important;
+      font-size: 1.3rem !important; font-weight: 500 !important; line-height: 1.3;
     }
-    .bg-slate-900, .bg-slate-900\/70 { background-color: var(--surface) !important; border-color: var(--divider) !important; }
-    .bg-slate-900\/40 { background-color: #f7f7f7 !important; }
+    #app-body main article > div:first-child h3::before {
+      content: ""; flex: none; width: 4px; height: 1.15em; background: var(--accent); border-radius: 2px; margin-right: 10px;
+    }
+    span.bg-slate-800 { background: none !important; border: none !important; color: var(--muted) !important; padding-left: 0 !important; padding-right: 0 !important; white-space: nowrap; }
 
-    /* Any element (rows, spans, ...) using the old dark tints gets the matching light tint */
-    .bg-indigo-950\/20, .bg-indigo-950\/30, .bg-indigo-950\/50 { background-color: var(--aside-bg) !important; }
-    .bg-emerald-950, .bg-emerald-950\/25, .bg-emerald-950\/60 { background-color: #e8f5e9 !important; }
-    .bg-rose-950\/25, .bg-rose-950\/60 { background-color: #ffebee !important; }
-    .bg-amber-950\/25 { background-color: #fff3e0 !important; }
+    /* ---------- Cards: white, small radius, elevation ---------- */
+    div[class*="bg-slate-9"] {
+      background-color: var(--surface) !important;
+      border-color: transparent !important;
+      box-shadow: var(--shadow-1);
+    }
+    /* a box inside a box stays flat so it never looks like a card on a card */
+    div[class*="bg-slate-9"] div[class*="bg-slate-9"], div.bg-indigo-500\/10 div[class*="bg-slate-9"] {
+      background-color: #f7f8fc !important; border-color: rgba(0,0,0,.08) !important; box-shadow: none;
+    }
+    div[class*="bg-slate-9"] div[class*="bg-slate-9"] div[class*="bg-slate-9"] { background-color: #fff !important; }
+
+    /* Callouts: coloured left border like .callout / .good / .bad / .warn in the DSA notes */
+    div.bg-indigo-950\/20, div.bg-indigo-950\/30, div.bg-indigo-950\/50, div.bg-indigo-500\/10, div.bg-indigo-500\/20,
+    div.bg-cyan-500\/10, div.bg-cyan-500\/20, div.bg-purple-500\/20 {
+      background-color: var(--surface) !important; border-width: 0 0 0 4px !important; border-color: var(--primary) !important; box-shadow: var(--shadow-1);
+    }
+    div.bg-emerald-950, div.bg-emerald-950\/25, div.bg-emerald-950\/60 { background-color: var(--good-bg) !important; border-width: 0 0 0 4px !important; border-color: var(--good) !important; box-shadow: var(--shadow-1); }
+    div.bg-rose-950\/25, div.bg-rose-950\/60 { background-color: var(--bad-bg) !important; border-width: 0 0 0 4px !important; border-color: var(--bad) !important; box-shadow: var(--shadow-1); }
+    div.bg-amber-950\/25 { background-color: var(--warn-bg) !important; border-width: 0 0 0 4px !important; border-color: var(--warn-line) !important; box-shadow: var(--shadow-1); }
+    /* any other element with the old dark tints (table rows, tokens) */
+    .bg-indigo-950\/20, .bg-indigo-950\/30, .bg-indigo-950\/50 { background-color: var(--primary-light) !important; }
+    span.bg-emerald-950, tr.bg-emerald-950\/25, td.bg-emerald-950 { background-color: var(--good-bg) !important; }
+    .bg-rose-950\/25, .bg-rose-950\/60 { background-color: var(--bad-bg) !important; }
+    .bg-amber-950\/25 { background-color: var(--warn-bg) !important; }
     .bg-slate-800 { background-color: var(--code-bg) !important; }
+    tbody[class*="bg-slate-"], tr[class*="bg-slate-"], thead[class*="bg-slate-"] { background-color: transparent !important; }
 
-    /* Callouts: a soft tint and a left rule, like a blog aside. Coloured only when meaningful. */
-    div.bg-indigo-950\/20, div.bg-indigo-950\/30, div.bg-indigo-950\/50,
-    div.bg-indigo-500\/10, div.bg-indigo-500\/20, div.bg-cyan-500\/10, div.bg-cyan-500\/20,
-    div.bg-purple-500\/20 {
-      background-color: var(--aside-bg) !important;
-      border-width: 0 0 0 3px !important;
-      border-color: var(--primary-line) !important;
-      border-radius: 0 4px 4px 0 !important;
-    }
-    div.bg-emerald-950, div.bg-emerald-950\/25, div.bg-emerald-950\/60 {
-      background-color: var(--good-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--good-line) !important; border-radius: 0 4px 4px 0 !important;
-    }
-    div.bg-rose-950\/25, div.bg-rose-950\/60 {
-      background-color: var(--bad-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--bad-line) !important; border-radius: 0 4px 4px 0 !important;
-    }
-    div.bg-amber-950\/25 {
-      background-color: var(--warn-bg) !important; border-width: 0 0 0 3px !important; border-color: var(--warn-line) !important; border-radius: 0 4px 4px 0 !important;
-    }
-    /* Quiz options / badges keep their full outline */
-    button.bg-emerald-950\/60 { background-color: var(--good-bg) !important; }
-    button.bg-rose-950\/60 { background-color: var(--bad-bg) !important; }
-    span.bg-indigo-500\/10, span.bg-indigo-500\/20, span.bg-cyan-500\/10, span.bg-cyan-500\/20, span.bg-purple-500\/20 {
-      background-color: var(--primary-light) !important; border-color: var(--primary-line) !important;
-    }
-    span.bg-emerald-500\/10, span.bg-emerald-500\/20 { background-color: #e8f5e9 !important; border-color: var(--good-line) !important; }
-    span.bg-rose-500\/20 { background-color: #ffebee !important; border-color: var(--bad-line) !important; }
-    span.bg-amber-500\/20 { background-color: #fff3e0 !important; border-color: var(--warn-line) !important; }
-    a.bg-indigo-500\/10 { background: none !important; border: none !important; padding-left: 0 !important; padding-right: 0 !important; }
-    a.bg-indigo-500\/10 span { text-decoration: underline; text-underline-offset: 3px; }
-
-    /* Page badges ("Page 1") become plain muted text */
-    span.bg-slate-800 { background: none !important; border: none !important; color: var(--muted) !important; padding-left: 0 !important; padding-right: 0 !important; }
+    /* Chips and small badges */
+    span.bg-indigo-500\/10, span.bg-indigo-500\/20, span.bg-cyan-500\/10, span.bg-cyan-500\/20, span.bg-purple-500\/20 { background-color: var(--primary-light) !important; border-color: #c5cae9 !important; }
+    span.bg-emerald-500\/10, span.bg-emerald-500\/20 { background-color: var(--good-bg) !important; border-color: #a5d6a7 !important; }
+    span.bg-rose-500\/20 { background-color: var(--bad-bg) !important; border-color: #ef9a9a !important; }
+    span.bg-amber-500\/20 { background-color: var(--warn-bg) !important; border-color: #ffe082 !important; }
 
     /* ---------- Borders ---------- */
-    .border-slate-800, .border-slate-800\/90, .border-slate-800\/80, .border-slate-800\/60,
-    .border-slate-800\/50, .border-slate-700 { border-color: var(--divider) !important; }
-    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) { border-color: var(--hair) !important; }
-    .border-indigo-500\/20, .border-indigo-500\/30, .border-indigo-500\/40,
-    .border-cyan-500\/30, .border-cyan-500\/40, .border-purple-500\/30 { border-color: var(--primary-line) !important; }
-    .border-emerald-500\/30, .border-emerald-500\/40, .border-emerald-700\/40, .border-emerald-400\/30 { border-color: var(--good-line) !important; }
-    .border-amber-500\/30, .border-amber-500\/40 { border-color: var(--warn-line) !important; }
-    .border-rose-500\/30 { border-color: var(--bad-line) !important; }
+    .border-slate-800, .border-slate-800\/90, .border-slate-800\/80, .border-slate-800\/60, .border-slate-800\/50, .border-slate-700 { border-color: var(--divider) !important; }
+    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(0,0,0,.08) !important; }
+    .border-indigo-500\/20, .border-indigo-500\/30, .border-indigo-500\/40, .border-cyan-500\/30, .border-cyan-500\/40, .border-purple-500\/30 { border-color: #c5cae9 !important; }
+    .border-emerald-500\/30, .border-emerald-500\/40, .border-emerald-700\/40, .border-emerald-400\/30 { border-color: #a5d6a7 !important; }
+    .border-amber-500\/30, .border-amber-500\/40 { border-color: #ffe082 !important; }
+    .border-rose-500\/30 { border-color: #ef9a9a !important; }
     .border-indigo-500, .border-cyan-500 { border-color: var(--primary) !important; }
     .border-emerald-500 { border-color: #43a047 !important; }
     .border-rose-500 { border-color: #e53935 !important; }
-    .hover\:border-indigo-500:hover, .hover\:border-indigo-400:hover, .hover\:border-indigo-500\/50:hover,
-    .hover\:border-cyan-500\/50:hover { border-color: var(--primary) !important; }
+    .hover\:border-indigo-500:hover, .hover\:border-indigo-400:hover, .hover\:border-indigo-500\/50:hover, .hover\:border-cyan-500\/50:hover { border-color: var(--primary) !important; }
     .hover\:border-emerald-500\/50:hover, .hover\:border-emerald-400:hover { border-color: #43a047 !important; }
     .hover\:border-rose-500\/50:hover { border-color: #e53935 !important; }
     .hover\:border-amber-500\/50:hover { border-color: #ffb300 !important; }
     .hover\:border-slate-700:hover { border-color: rgba(0,0,0,.3) !important; }
     .focus\:border-indigo-500:focus, .focus\:border-indigo-400:focus, .focus\:border-cyan-400:focus { border-color: var(--primary) !important; }
-
     .hover\:bg-slate-800\/70:hover, .hover\:bg-slate-800\/50:hover { background-color: var(--primary-light) !important; }
-    .hover\:bg-indigo-500\/20:hover, .hover\:bg-cyan-500\/20:hover { background-color: var(--primary-line) !important; }
+    .hover\:bg-indigo-500\/20:hover, .hover\:bg-cyan-500\/20:hover { background-color: #c5cae9 !important; }
 
-    /* ---------- Buttons: flat Material ---------- */
+    /* ---------- Buttons ---------- */
     button { font-weight: 500; letter-spacing: .1px; }
     button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-    .bg-indigo-600, .bg-cyan-600 { background-color: var(--primary) !important; }
+    .bg-indigo-600, .bg-cyan-600 { background-color: var(--primary) !important; box-shadow: var(--shadow-1); }
     .bg-indigo-600, .bg-indigo-600 *, .bg-cyan-600, .bg-cyan-600 *, .bg-emerald-600, .bg-emerald-600 * { color: #fff !important; }
     .hover\:bg-indigo-500:hover, .hover\:bg-cyan-500:hover { background-color: var(--primary-dark) !important; }
     .bg-emerald-600 { background-color: #388e3c !important; box-shadow: var(--shadow-2); }
-    button.bg-slate-800, button.bg-slate-950, button.bg-slate-900 {
-      background-color: #fff !important;
-      border: 1px solid rgba(0,0,0,.2) !important;
-      color: var(--fg) !important;
-    }
-    button.bg-slate-800:hover, button.bg-slate-950:hover, button.bg-slate-900:hover,
-    .hover\:bg-slate-700:hover { background-color: #f0f0f0 !important; }
+    button[class*="bg-slate-"] { background-color: #fff !important; border: 1px solid rgba(0,0,0,.2) !important; color: var(--fg) !important; box-shadow: none; }
+    button[class*="bg-slate-"]:hover, .hover\:bg-slate-700:hover { background-color: #eceff1 !important; }
+    button.bg-emerald-950\/60 { background-color: var(--good-bg) !important; }
+    button.bg-rose-950\/60 { background-color: var(--bad-bg) !important; }
+    button.bg-slate-900\/40 { background-color: #f7f7f7 !important; }
 
     /* ---------- Inputs ---------- */
-    input:not([type="range"]), textarea, select {
-      background-color: #fff !important;
-      color: var(--fg) !important;
-      border-color: rgba(0,0,0,.25) !important;
-    }
+    input:not([type="range"]), textarea, select { background-color: #fff !important; color: var(--fg) !important; border-color: rgba(0,0,0,.25) !important; box-shadow: none; }
     input:not([type="range"]):focus { outline: none; box-shadow: 0 0 0 1px var(--primary); }
     .accent-indigo-500 { accent-color: var(--primary); }
 
-    /* ---------- App bar: slim, flat, indigo ---------- */
-    header.sticky.top-0 {
-      background-color: var(--primary) !important;
-      background-image: none !important;
-      border: none !important;
-      box-shadow: var(--shadow-1);
-      backdrop-filter: none;
-    }
-    header.sticky > div.max-w-5xl { max-width: 1140px; height: 56px; }
-    header.sticky .text-white, header.sticky .text-slate-100, header.sticky .text-slate-200 { color: #fff !important; }
-    header.sticky .text-slate-300, header.sticky .text-slate-400, header.sticky .text-slate-500 { color: rgba(255,255,255,.8) !important; }
-    header.sticky .hover\:text-white:hover { color: #fff !important; }
-    header.sticky .bg-gradient-to-br, header.sticky .truncate .rounded-full, header.sticky #print-btn, header.sticky #theme-toggle-btn { display: none !important; }
-    header.sticky .truncate p { display: none; }
-    header.sticky .truncate span.font-bold { font-size: 1.05rem; font-weight: 500; letter-spacing: .1px; }
-    header.sticky [class*="bg-slate-9"] {
-      background-color: rgba(255,255,255,.14) !important;
-      border-color: transparent !important;
-    }
-    header.sticky nav[aria-label="View Switcher"] { background: transparent !important; border: none !important; padding: 0; gap: 2px; }
-    header.sticky .view-tab {
-      border-radius: 0 !important; white-space: nowrap; font-size: .875rem; font-weight: 500;
-      color: rgba(255,255,255,.78) !important; background: transparent !important; box-shadow: none;
-    }
-    header.sticky nav .view-tab { height: 56px; padding: 0 14px; }
-    header.sticky .view-tab:hover { background-color: rgba(255,255,255,.1) !important; color: #fff !important; }
-    header.sticky .view-tab.bg-indigo-600, header.sticky .view-tab.bg-indigo-600 * {
-      color: #fff !important; background: transparent !important;
-      box-shadow: inset 0 -3px 0 var(--accent);
-    }
-    header.sticky input {
-      background-color: rgba(255,255,255,.16) !important; color: #fff !important; border: 1px solid transparent !important;
-    }
-    header.sticky input::placeholder { color: rgba(255,255,255,.75); }
-    header.sticky input:focus { background-color: rgba(255,255,255,.26) !important; box-shadow: none; }
-    header.sticky #global-search { width: 11rem; }
-    header.sticky .truncate { overflow: visible; white-space: nowrap; flex-shrink: 0; }
-    span.bg-slate-800 { white-space: nowrap; }
-    header.sticky > div.bg-slate-900\/60 { background-color: rgba(0,0,0,.12) !important; border: none !important; }
-
-    /* ---------- Page layout: sticky contents + reading column ---------- */
-    #app-body > div.max-w-4xl { max-width: 56rem; padding-top: 2rem; }
-    @media (min-width: 1100px) {
-      #app-body > div.max-w-4xl {
-        max-width: 1140px !important;
-        display: grid !important;
-        grid-template-columns: 220px minmax(0, 1fr);
-        column-gap: 3rem;
-      }
-      aside#sidebar-nav { display: block !important; margin: 0 !important; width: auto !important; }
-      #mobile-menu-btn { display: none !important; }
-    }
-
-    /* Contents (sidebar) */
-    aside#sidebar-nav > div {
-      background: transparent !important; border: none !important; box-shadow: none !important;
-      padding: 0 !important; top: 5.5rem !important;
-    }
-    #sidebar-nav > div > div:first-child p, #sidebar-nav > div > div:first-child span + span { display: none; }
-    #sidebar-nav > div > div:first-child > div { color: var(--muted) !important; margin-bottom: 0; }
-    #sidebar-nav .space-y-1 > div:first-child {
-      font-size: .86rem !important; font-weight: 500 !important; color: var(--fg) !important; padding-left: 0 !important; margin-top: .4rem;
-    }
-    a.toc-link {
-      display: block; font-size: .86rem !important; line-height: 1.45; color: var(--muted) !important;
-      border-left: 2px solid var(--divider); border-radius: 0 !important; padding: .32rem .75rem !important; background: none !important;
-    }
-    a.toc-link:hover { color: var(--primary) !important; border-left-color: var(--primary); background: none !important; }
-    a.toc-link.active { color: var(--primary-dark) !important; border-left-color: var(--accent); font-weight: 500; }
-
-    /* The reading "paper" */
-    main.flex-1 {
-      background: var(--surface);
-      box-shadow: var(--shadow-1);
-      border-radius: 4px;
-      padding: 1.75rem 1.25rem 2.5rem;
-    }
-    @media (min-width: 768px) { main.flex-1 { padding: 3.25rem 3.75rem 4rem; } }
-
-    /* Post header (replaces the old banner) */
-    .post-head { margin-bottom: .5rem; }
-    .post-kicker { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--primary); font-weight: 500; margin: 0 0 .75rem; }
-    .post-head h1 { font-size: 2.5rem; line-height: 1.2; font-weight: 500; color: var(--fg); margin: 0 0 1.25rem; letter-spacing: -.01em; }
-    .post-lede { font-size: 1.15rem; line-height: 1.75; color: var(--body); margin: 0; }
-    .post-lede a, #app-body main p a, #app-body main li a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-    .post-lede a:hover, #app-body main p a:hover { color: var(--primary-dark); text-decoration-thickness: 2px; }
-    @media (max-width: 640px) { .post-head h1 { font-size: 1.9rem; } }
-
-    /* ---------- Sections and articles: headings + hairlines, no card per section ---------- */
-    #app-body main h2 { color: var(--fg) !important; font-size: 1.95rem !important; font-weight: 500 !important; line-height: 1.3; letter-spacing: -.005em; }
-    @media (max-width: 640px) { #app-body main h2 { font-size: 1.6rem !important; } }
-    #app-body main div.border-b.border-slate-800 { border-bottom: 1px solid var(--divider) !important; padding-bottom: 1rem !important; }
-    #app-body main div.border-b.border-slate-800 > div > span:first-child { color: var(--primary) !important; }
-
-    article.searchable-card, section.searchable-card {
-      background: transparent !important; box-shadow: none !important; border: none !important;
-      border-top: 1px solid var(--hair) !important; border-radius: 0 !important; padding: 2.25rem 0 0 !important;
-    }
-    #app-body main article > div:first-child h3 { color: var(--fg) !important; font-size: 1.45rem !important; font-weight: 500 !important; line-height: 1.35; }
-    #app-body main strong { font-weight: 700; color: var(--fg); }
-    #app-body main em { color: inherit; }
-
-    /* Interactive widgets keep a quiet frame */
-    #section-labs > section, #flashcards-quiz > div {
-      background: #fff !important; border: 1px solid var(--divider) !important; box-shadow: none !important;
-      border-radius: 4px !important; padding: 1.5rem !important;
-    }
-    div.searchable-card.bg-slate-900\/90 { background: #fff !important; border: 1px solid var(--divider) !important; box-shadow: none; }
-    div.searchable-card.bg-slate-900\/90 > button:hover { background-color: var(--inner) !important; }
-
-    /* Flashcards above the quiz, one column: the reading column is too narrow for two */
+    /* Interactive widgets */
+    #section-labs > section, #flashcards-quiz > div { padding: 1.25rem 1.5rem !important; }
     #flashcards-quiz { grid-template-columns: minmax(0, 1fr) !important; }
     #flashcards-quiz > div:first-child { justify-content: flex-start !important; }
-    #fc-card-box { min-height: 220px !important; border-width: 1px !important; border-color: var(--divider) !important; background-color: #fff !important; }
-    #fc-card-box:hover { border-color: var(--primary) !important; box-shadow: var(--shadow-1); }
+    #fc-card-box { min-height: 220px !important; border: 1px solid var(--divider) !important; box-shadow: none !important; }
+    #fc-card-box:hover { border-color: var(--primary) !important; }
+    div.searchable-card.bg-slate-900\/90 > button:hover { background-color: #fafafa !important; }
 
-    /* ---------- Code ---------- */
+    /* ---------- Code (same as <pre> in the DSA notes) ---------- */
     code {
-      background-color: var(--code-bg);
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: .86em;
+      background-color: var(--code-bg); color: #37474f; padding: 2px 6px; border-radius: 4px;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em;
     }
     pre {
-      background-color: transparent !important;
-      color: #263238 !important;
-      font-size: 14px !important;
-      line-height: 1.7 !important;
+      background-color: transparent !important; color: #263238 !important;
+      font-size: .78rem !important; line-height: 1.55 !important;
     }
     pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
     pre .text-slate-200, pre .text-slate-300 { color: #263238 !important; }
-    div:has(> pre) { background-color: var(--code-bg) !important; border: 1px solid var(--hair) !important; box-shadow: none; }
-    div:has(> pre) > div:first-child { background-color: transparent !important; border-bottom: 1px solid var(--hair) !important; }
-    div:has(> pre) > div:first-child span { color: var(--muted) !important; font-weight: 400 !important; }
+    div[class*="bg-slate-9"]:has(> pre) {
+      background-color: var(--code-bg) !important; border-left: 4px solid var(--primary) !important; border-radius: 4px !important; box-shadow: var(--shadow-1);
+    }
+    div[class*="bg-slate-9"]:has(> pre) > div:first-child { background-color: transparent !important; border-bottom: 1px solid rgba(0,0,0,.08) !important; box-shadow: none; }
+    div[class*="bg-slate-9"]:has(> pre) > div:first-child span { color: var(--muted) !important; font-weight: 400 !important; }
 
-    /* ---------- Tables ---------- */
+    /* ---------- Tables (white card, indigo-tinted uppercase headers) ---------- */
     table { border-collapse: collapse; }
     table th {
-      background-color: var(--inner) !important;
-      color: var(--primary-dark) !important;
-      font-weight: 500 !important;
-      font-size: 0.76rem !important;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      border-bottom: 2px solid var(--primary-line) !important;
+      background-color: var(--primary-light) !important; color: var(--primary-dark) !important;
+      font-weight: 500 !important; font-size: 0.68rem !important; text-transform: uppercase; letter-spacing: .6px;
     }
-    table td { padding: .9rem 1rem !important; vertical-align: top; }
-    table tbody tr:hover td { background-color: rgba(63,81,181,.04); }
+    table td { padding: .8rem 1rem !important; vertical-align: top; }
+    table tbody tr:hover td { background-color: rgba(63,81,181,.05); }
+    div.overflow-x-auto:has(> table), div.rounded-xl:has(> table) { background: var(--surface) !important; box-shadow: var(--shadow-1); border-color: transparent !important; }
 
     /* ---------- Math ---------- */
     .math-font { font-family: 'Cambria Math', 'Times New Roman', Georgia, serif; letter-spacing: 0.01em; }
     .matrix-bracket {
-      display: inline-flex; align-items: center;
-      border-left: 1.5px solid var(--fg); border-right: 1.5px solid var(--fg);
+      display: inline-flex; align-items: center; border-left: 1.5px solid var(--fg); border-right: 1.5px solid var(--fg);
       padding: 4px 10px; position: relative; margin: 0 4px; vertical-align: middle;
     }
     .matrix-bracket::before, .matrix-bracket::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 5px;
-      border-top: 1.5px solid var(--fg); border-bottom: 1.5px solid var(--fg);
+      content: ''; position: absolute; top: 0; bottom: 0; width: 5px; border-top: 1.5px solid var(--fg); border-bottom: 1.5px solid var(--fg);
     }
     .matrix-bracket::before { left: 0; }
     .matrix-bracket::after { right: 0; }
@@ -357,21 +335,44 @@
     .cell-highlight-col { background-color: #fce4ec !important; border-color: var(--accent) !important; }
     .cell-highlight-out { background-color: var(--good-bg) !important; border-color: var(--good) !important; }
 
+    /* Diagram labels stay legible */
+    svg.min-w-\[600px\] { min-width: 700px; }
+
     /* ---------- Footer & scrollbars ---------- */
-    footer.border-t { background: transparent !important; border-color: var(--divider) !important; }
-    footer .text-slate-400 { color: var(--muted) !important; }
-    .code-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
-    .code-scroll::-webkit-scrollbar-thumb { background: var(--primary-line); border-radius: 4px; }
+    footer.border-t { background: transparent !important; border: none !important; margin-top: 3rem !important; text-align: center; }
+    footer.border-t > div { justify-content: center !important; flex-direction: column; }
+    footer .text-slate-400 { color: var(--muted) !important; font-size: .8rem; }
+    /* Scrollbars: thin and quiet; hidden entirely on the contents sidebar (it still scrolls) */
+    .code-scroll { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.22) transparent; }
+    .code-scroll::-webkit-scrollbar { height: 5px; width: 5px; }
+    .code-scroll::-webkit-scrollbar-track { background: transparent; }
+    .code-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.22); border-radius: 3px; }
+    aside#sidebar-nav > div { scrollbar-width: none; -ms-overflow-style: none; }
+    aside#sidebar-nav > div::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
     @media print {
       .no-print { display: none !important; }
       .print-break { page-break-before: always; }
       body#app-body { background: #fff !important; }
-      main.flex-1 { box-shadow: none; padding: 0; }
     }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200" id="app-body">
+
+  <!-- App bar (same pattern as the DSA notes) -->
+  <header class="appbar no-print">
+    <div class="appbar-inner">
+      <h1>Supervised Learning &amp; Linear Algebra</h1>
+      <div class="subtitle">
+        CMU 10-202: Introduction to Modern AI, Lectures 2 &amp; 3 &nbsp;&middot;&nbsp;
+        <span class="tag o">Prof. Zico Kolter</span>
+        <span class="tag o">Spring 2026</span>
+        <span class="tag">Supervised ML</span>
+        <span class="tag">Linear Algebra</span>
+        <span class="tag">PyTorch</span>
+      </div>
+    </div>
+  </header>
 
   <!-- Sticky Top Navigation Bar -->
   <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md no-print">
@@ -401,13 +402,8 @@
         <button type="button" data-view="interview" class="view-tab px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">Interview Prep</button>
       </nav>
 
-      <!-- Search + Actions -->
+      <!-- Actions -->
       <div class="flex items-center gap-2">
-        <div class="relative hidden sm:block">
-          <input id="global-search" type="text" placeholder="Filter topics, math, PyTorch..." class="w-44 lg:w-56 bg-slate-900 border border-slate-800 rounded-lg pl-8 pr-7 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-          <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <button id="clear-search-btn" type="button" class="hidden absolute right-2 top-1.5 text-slate-400 hover:text-white text-xs" title="Clear search">&times;</button>
-        </div>
       </div>
     </div>
 
@@ -479,8 +475,6 @@
 
       <!-- Post header -->
       <section class="post-head">
-        <p class="post-kicker">CMU 10-202 &middot; Introduction to Modern AI &middot; Lectures 2 &amp; 3</p>
-        <h1>Supervised learning and linear algebra</h1>
         <p class="post-lede">
           My notes on the second and third lectures of Zico Kolter&rsquo;s
           <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer">Introduction to Modern AI</a>
@@ -1816,53 +1810,69 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
       <!-- ===================================================================== -->
       <!-- SECTION 6: CURATED EXTERNAL RESOURCES & OFFICIAL LINKS                -->
       <!-- ===================================================================== -->
-      <section id="external-resources" class="searchable-card bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg sm:text-xl font-bold text-white">6.1 Official Course Links, Notebooks &amp; Documentation</h2>
-          <span class="text-xs px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-semibold">Verified Sources</span>
+            <section id="external-resources" class="searchable-card p-0 space-y-6">
+        <div class="border-b border-slate-800 pb-2">
+          <h2 class="text-xl font-bold text-white">6.1 Official Course Links & Documentation</h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
-          <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition block space-y-1">
-            <div class="font-bold text-indigo-300">CMU 10-202 Official Website &nearr;</div>
-            <div class="text-slate-400">Syllabus, schedule, Colab homework links, and mugrade instructions at modernaicourse.org.</div>
-          </a>
-          <a href="https://www.youtube.com/watch?v=xIQkf7ZGQhM" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition block space-y-1">
-            <div class="font-bold text-indigo-300">Lecture 02 YouTube Video &nearr;</div>
-            <div class="text-slate-400">Prof. Zico Kolter's full lecture on Intro to Supervised Machine Learning.</div>
-          </a>
-          <a href="https://www.youtube.com/watch?v=tlbLH77GFLQ" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 transition block space-y-1">
-            <div class="font-bold text-cyan-300">Lecture 03 YouTube Video &nearr;</div>
-            <div class="text-slate-400">Prof. Zico Kolter's full lecture on Linear Algebra and PyTorch Tensors.</div>
-          </a>
-          <a href="https://github.com/marimo-team/modernaicourse" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 transition block space-y-1">
-            <div class="font-bold text-emerald-300">Marimo Companion Notebooks (GitHub) &nearr;</div>
-            <div class="text-slate-400">Interactive Python notebooks for HW0, HW1 (Linear Algebra &amp; PyTorch), and HW2.</div>
-          </a>
-          <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-amber-500/50 transition block space-y-1">
-            <div class="font-bold text-amber-300">PyTorch torch.Tensor Reference &nearr;</div>
-            <div class="text-slate-400">Official documentation on tensor indexing, slicing, shapes, transposes, and @ matrix multiplication.</div>
-          </a>
-          <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/50 transition block space-y-1">
-            <div class="font-bold text-rose-300">PyTorch CrossEntropyLoss Docs &nearr;</div>
-            <div class="text-slate-400">Official formulation of the standard loss function used across modern AI &amp; LLM training.</div>
-          </a>
+        
+        <div class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-6">
+            <div class="w-48 shrink-0 font-bold text-indigo-300">Course Site</div>
+            <div>
+              <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">modernaicourse.org &nearr;</a>
+              <p class="text-sm text-slate-400 mt-1">Official CMU 10-202 syllabus, schedule, and mugrade instructions.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-6">
+            <div class="w-48 shrink-0 font-bold text-indigo-300">Video Lectures</div>
+            <div class="space-y-3">
+              <div>
+                <a href="https://www.youtube.com/watch?v=xIQkf7ZGQhM" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">Lecture 02: Intro to Supervised ML &nearr;</a>
+                <p class="text-sm text-slate-400">Full recording of Prof. Zico Kolter's second lecture.</p>
+              </div>
+              <div>
+                <a href="https://www.youtube.com/watch?v=tlbLH77GFLQ" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">Lecture 03: Linear Algebra & PyTorch &nearr;</a>
+                <p class="text-sm text-slate-400">Full recording covering tensors and matrix operations.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-6">
+            <div class="w-48 shrink-0 font-bold text-indigo-300">Notebooks</div>
+            <div>
+              <a href="https://github.com/marimo-team/modernaicourse" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">Marimo GitHub Repository &nearr;</a>
+              <p class="text-sm text-slate-400 mt-1">Interactive companion notebooks for HW0 through HW2.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-6">
+            <div class="w-48 shrink-0 font-bold text-indigo-300">PyTorch Docs</div>
+            <div class="space-y-3">
+              <div>
+                <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">torch.Tensor Reference &nearr;</a>
+                <p class="text-sm text-slate-400">Indexing, slicing, shapes, and matrix multiplication.</p>
+              </div>
+              <div>
+                <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-300 hover:underline">CrossEntropyLoss API &nearr;</a>
+                <p class="text-sm text-slate-400">Official formulation of the standard loss function for AI training.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
     </main>
   </div>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800/80 bg-slate-950 py-8 mt-12 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-      <div>
-        <strong>CMU 10-202: Introduction to Modern AI</strong> — Lectures 2 &amp; 3: study notes and interview practice.
-      </div>
-      <div class="flex items-center gap-4">
-        <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">modernaicourse.org</a>
-        <span>&bull;</span>
-        <a href="#app-body" class="hover:text-white transition">Back to Top &uarr;</a>
-      </div>
+    <!-- Footer -->
+  <footer class="py-12 mt-12 text-center text-[11px] text-slate-400 no-print">
+    <div class="flex items-center justify-center gap-4">
+      <span>CMU 10-202</span>
+      <span>&bull;</span>
+      <a href="https://modernaicourse.org/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition underline decoration-hair underline-offset-4">modernaicourse.org</a>
+      <span>&bull;</span>
+      <a href="#app-body" class="hover:text-primary transition">Back to Top &uarr;</a>
     </div>
   </footer>
 
@@ -1927,37 +1937,6 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           setActiveView('all');
         });
       });
-
-      // --- 3. Global Search Filter ---
-      var searchInput = document.getElementById('global-search');
-      var clearSearchBtn = document.getElementById('clear-search-btn');
-      function applySearchFilter() {
-        if (!searchInput) return;
-        var q = searchInput.value.trim().toLowerCase();
-        if (clearSearchBtn) {
-          if (q.length > 0) clearSearchBtn.classList.remove('hidden');
-          else clearSearchBtn.classList.add('hidden');
-        }
-        if (q.length > 0) setActiveView('all');
-        var cards = document.querySelectorAll('.searchable-card');
-        cards.forEach(function(card) {
-          var txt = card.textContent.toLowerCase();
-          if (!q || txt.indexOf(q) !== -1) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      }
-      if (searchInput) {
-        searchInput.addEventListener('input', applySearchFilter);
-      }
-      if (clearSearchBtn && searchInput) {
-        clearSearchBtn.addEventListener('click', function() {
-          searchInput.value = '';
-          applySearchFilter();
-        });
-      }
 
       // --- 4. Print ---
       var printBtn = document.getElementById('print-btn');
@@ -2697,6 +2676,15 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
     })();
   </script>
   <script>
+    // Diagram labels are drawn in fixed SVG units, so scale them up for readability
+    document.querySelectorAll('svg').forEach(function (svg) {
+      var vb = svg.viewBox && svg.viewBox.baseVal;
+      if (!vb || vb.width < 700) return; // small figures already render at a good size
+      svg.querySelectorAll('text[font-size]').forEach(function (t) {
+        t.setAttribute('font-size', (parseFloat(t.getAttribute('font-size')) * 1.25).toFixed(1));
+      });
+    });
+
     // Highlight the current section in the Contents sidebar
     (function () {
       if (!('IntersectionObserver' in window)) return;
