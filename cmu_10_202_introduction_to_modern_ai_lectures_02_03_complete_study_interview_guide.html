@@ -1,274 +1,342 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CMU 10-202: Introduction to Modern AI — Lectures 02 & 03 Complete Study & Interview Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'SFMono-Regular', 'Consolas', 'monospace'],
-            serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif']
+            sans: ['Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+            mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+            serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif']
+          },
+          fontSize: {
+            xs: ['0.84rem', { lineHeight: '1.6' }],
+            sm: ['0.95rem', { lineHeight: '1.7' }]
           }
         }
       }
     };
   </script>
-    <style>
+  <style>
+    /* ==========================================================================
+       Material Design (light only)
+       Indigo primary + pink accent, grey page, white elevated cards.
+       The markup uses dark-slate Tailwind utility classes; they are re-mapped
+       below to light Material equivalents so the HTML/JS stay untouched.
+       ========================================================================== */
     :root {
-      --bg-page: #f8f7f4;
-      --bg-card: #ffffff;
-      --bg-subtle: #f3f4f6;
-      --bg-muted: #ebedf0;
-      --bg-code: #f5f6f8;
-      --border-soft: #e5e7eb;
-      --border-strong: #d1d5db;
-      --text-heading: #1f2937;
-      --text-body: #374151;
-      --text-muted: #6b7280;
-      --accent-primary: #4338ca;
-      --accent-secondary: #0f766e;
-      --accent-soft: #f0f4ff;
-      --card-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+      --primary: #3f51b5;
+      --primary-dark: #303f9f;
+      --primary-light: #e8eaf6;
+      --primary-line: #c5cae9;
+      --accent: #ff4081;
+      --bg: #f5f5f5;
+      --surface: #ffffff;
+      --inner: #f7f8fc;
+      --fg: rgba(0, 0, 0, 0.87);
+      --body: rgba(0, 0, 0, 0.76);
+      --muted: rgba(0, 0, 0, 0.60);
+      --divider: rgba(0, 0, 0, 0.12);
+      --code-bg: #eceff1;
+      --good: #2e7d32;  --good-bg: #e8f5e9;  --good-line: #a5d6a7;
+      --bad:  #c62828;  --bad-bg:  #ffebee;  --bad-line:  #ef9a9a;
+      --warn: #b26a00;  --warn-bg: #fff8e1;  --warn-line: #ffe082;
+      --cyan: #00838f;  --cyan-bg: #e0f7fa;  --cyan-line: #80deea;
+      --purple: #6a1b9a; --purple-bg: #f3e5f5; --purple-line: #ce93d8;
+      --shadow-1: 0 1px 3px rgba(0,0,0,.20), 0 1px 1px rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+      --shadow-2: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     }
 
-    body.soft-dark {
-      --bg-page: #181a20;
-      --bg-card: #20232b;
-      --bg-subtle: #262a34;
-      --bg-muted: #2e3340;
-      --bg-code: #15171c;
-      --border-soft: #2e3340;
-      --border-strong: #3e4556;
-      --text-heading: #e5e7eb;
-      --text-body: #cbd5e1;
-      --text-muted: #94a3b8;
-      --accent-primary: #818cf8;
-      --accent-secondary: #2dd4bf;
-      --accent-soft: rgba(99, 102, 241, 0.1);
-      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--primary); color: #fff; }
+
+    body#app-body {
+      background: var(--bg) !important;
+      color: var(--body) !important;
+      font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
     }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: var(--bg-page) !important;
-      color: var(--text-body) !important;
-      line-height: 1.8;
-      font-size: 15.5px;
-      letter-spacing: -0.005em;
+    /* ---------- Small-radius Material corners ---------- */
+    .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl { border-radius: 4px !important; }
+
+    /* ---------- Text colours ---------- */
+    .text-white, .text-slate-100, .text-slate-200 { color: var(--fg) !important; }
+    .text-slate-300 { color: var(--body) !important; }
+    .text-slate-400, .text-slate-500 { color: var(--muted) !important; }
+
+    .text-indigo-300, .text-indigo-400 { color: var(--primary-dark) !important; }
+    .text-cyan-300, .text-cyan-400 { color: var(--cyan) !important; }
+    .text-emerald-200, .text-emerald-300, .text-emerald-400 { color: var(--good) !important; }
+    .text-amber-300, .text-amber-400 { color: var(--warn) !important; }
+    .text-rose-200, .text-rose-300, .text-rose-400 { color: var(--bad) !important; }
+    .text-purple-300, .text-purple-400 { color: var(--purple) !important; }
+
+    .hover\:text-white:hover:not(.bg-indigo-600) { color: var(--primary-dark) !important; }
+    .hover\:text-indigo-300:hover, .hover\:text-cyan-300:hover { color: var(--primary) !important; }
+    .placeholder-slate-500::placeholder { color: rgba(0,0,0,.45); }
+
+    /* Slightly larger fine print for easier reading */
+    .text-\[11px\] { font-size: 0.8rem !important; line-height: 1.55 !important; }
+    .text-\[10px\] { font-size: 0.74rem !important; line-height: 1.5 !important; }
+
+    /* ---------- Surfaces ---------- */
+    .bg-slate-950, .bg-slate-950\/90, .bg-slate-950\/80, .bg-slate-950\/60, .bg-slate-950\/50,
+    .bg-slate-900\/90, .bg-slate-900\/80, .bg-slate-900\/60 {
+      background-color: var(--inner) !important;
+      border-color: var(--divider) !important;
+    }
+    .bg-slate-900, .bg-slate-900\/70 {
+      background-color: var(--surface) !important;
+      border-color: var(--divider) !important;
+    }
+    .bg-slate-900\/40 { background-color: #fafafa !important; }
+
+    /* Coloured callouts keep their meaning (info / good / bad / warn) */
+    .bg-indigo-950\/20, .bg-indigo-950\/30, .bg-indigo-950\/50,
+    .bg-indigo-500\/10, .bg-indigo-500\/20 {
+      background-color: var(--primary-light) !important;
+      border-color: var(--primary-line) !important;
+    }
+    .bg-cyan-500\/10, .bg-cyan-500\/20 { background-color: var(--cyan-bg) !important; border-color: var(--cyan-line) !important; }
+    .bg-emerald-950, .bg-emerald-950\/25, .bg-emerald-950\/60,
+    .bg-emerald-500\/10, .bg-emerald-500\/20 { background-color: var(--good-bg) !important; border-color: var(--good-line) !important; }
+    .bg-rose-950\/25, .bg-rose-950\/60, .bg-rose-500\/20 { background-color: var(--bad-bg) !important; border-color: var(--bad-line) !important; }
+    .bg-amber-950\/25, .bg-amber-500\/20 { background-color: var(--warn-bg) !important; border-color: var(--warn-line) !important; }
+    .bg-purple-500\/20 { background-color: var(--purple-bg) !important; border-color: var(--purple-line) !important; }
+
+    /* ---------- Borders ---------- */
+    .border-slate-800, .border-slate-800\/90, .border-slate-800\/80, .border-slate-800\/60,
+    .border-slate-800\/50, .border-slate-700 { border-color: var(--divider) !important; }
+    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) { border-color: var(--divider) !important; }
+    .border-indigo-500\/20, .border-indigo-500\/30, .border-indigo-500\/40 { border-color: var(--primary-line) !important; }
+    .border-cyan-500\/30, .border-cyan-500\/40 { border-color: var(--cyan-line) !important; }
+    .border-emerald-500\/30, .border-emerald-500\/40, .border-emerald-700\/40, .border-emerald-400\/30 { border-color: var(--good-line) !important; }
+    .border-amber-500\/30, .border-amber-500\/40 { border-color: var(--warn-line) !important; }
+    .border-rose-500\/30 { border-color: var(--bad-line) !important; }
+    .border-purple-500\/30 { border-color: var(--purple-line) !important; }
+    .border-indigo-500 { border-color: var(--primary) !important; }
+    .border-cyan-500 { border-color: #00acc1 !important; }
+    .border-emerald-500 { border-color: #43a047 !important; }
+    .border-rose-500 { border-color: #e53935 !important; }
+
+    .hover\:border-indigo-500:hover, .hover\:border-indigo-400:hover, .hover\:border-indigo-500\/50:hover { border-color: var(--primary) !important; }
+    .hover\:border-emerald-500\/50:hover, .hover\:border-emerald-400:hover { border-color: #43a047 !important; }
+    .hover\:border-rose-500\/50:hover { border-color: #e53935 !important; }
+    .hover\:border-amber-500\/50:hover { border-color: #ffb300 !important; }
+    .hover\:border-cyan-500\/50:hover { border-color: #00acc1 !important; }
+    .hover\:border-slate-700:hover { border-color: rgba(0,0,0,.3) !important; }
+    .focus\:border-indigo-500:focus, .focus\:border-indigo-400:focus { border-color: var(--primary) !important; }
+    .focus\:border-cyan-400:focus { border-color: #00acc1 !important; }
+
+    /* ---------- Hover backgrounds ---------- */
+    .hover\:bg-slate-800\/70:hover, .hover\:bg-slate-800\/50:hover { background-color: var(--primary-light) !important; }
+    .hover\:bg-indigo-500\/20:hover { background-color: var(--primary-line) !important; }
+    .hover\:bg-cyan-500\/20:hover { background-color: #b2ebf2 !important; }
+
+    /* ---------- Buttons ---------- */
+    .bg-indigo-600 { background-color: var(--primary) !important; box-shadow: var(--shadow-1); }
+    .bg-indigo-600, .bg-indigo-600 *, .bg-cyan-600, .bg-cyan-600 *, .bg-emerald-600, .bg-emerald-600 * { color: #fff !important; }
+    .hover\:bg-indigo-500:hover { background-color: var(--primary-dark) !important; }
+    .bg-cyan-600 { background-color: var(--cyan) !important; box-shadow: var(--shadow-1); }
+    .hover\:bg-cyan-500:hover { background-color: #006064 !important; }
+    .bg-emerald-600 { background-color: var(--good) !important; box-shadow: var(--shadow-2); }
+    .bg-slate-800 { background-color: var(--code-bg) !important; border-color: var(--divider) !important; }
+    .hover\:bg-slate-700:hover { background-color: #cfd8dc !important; }
+    button { font-weight: 500; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ---------- Inputs ---------- */
+    input:not([type="range"]), textarea, select {
+      background-color: #fff !important;
+      color: var(--fg) !important;
+      border-color: #bdbdbd !important;
+    }
+    input:not([type="range"]):focus { outline: none; box-shadow: 0 0 0 1px var(--primary); }
+    .accent-indigo-500 { accent-color: var(--accent); }
+
+    /* ---------- App bar (sticky header) ---------- */
+    header.sticky.top-0 {
+      background-color: var(--primary) !important;
+      background-image: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+      border-bottom: none !important;
+      box-shadow: var(--shadow-2);
+      backdrop-filter: none;
+    }
+    header.sticky .text-white, header.sticky .text-slate-100, header.sticky .text-slate-200 { color: #fff !important; }
+    header.sticky .text-slate-300, header.sticky .text-slate-400, header.sticky .text-slate-500 { color: rgba(255,255,255,.85) !important; }
+    header.sticky .hover\:text-white:hover { color: #fff !important; }
+    header.sticky [class*="bg-slate-9"] {
+      background-color: rgba(255,255,255,.14) !important;
+      border-color: rgba(255,255,255,.28) !important;
+    }
+    header.sticky .hover\:border-slate-700:hover { border-color: rgba(255,255,255,.6) !important; }
+    header.sticky input {
+      background-color: rgba(255,255,255,.16) !important;
+      color: #fff !important;
+      border-color: rgba(255,255,255,.35) !important;
+    }
+    header.sticky input::placeholder { color: rgba(255,255,255,.75); }
+    header.sticky input:focus { border-color: #fff !important; box-shadow: none; background-color: rgba(255,255,255,.24) !important; }
+    header.sticky > div.max-w-5xl { max-width: 84rem; }
+    header.sticky .view-tab { border-radius: 4px !important; letter-spacing: .2px; white-space: nowrap; font-size: .8rem; }
+    header.sticky #global-search { width: 12rem; }
+    header.sticky .truncate .rounded-full { display: none !important; }
+    header.sticky #print-btn { display: none !important; }
+    @media (min-width: 1360px) { header.sticky #print-btn { display: inline-flex !important; } }
+    header.sticky .view-tab:hover { background-color: rgba(255,255,255,.16); }
+    header.sticky .view-tab.bg-indigo-600 {
+      background-color: #fff !important;
+      color: var(--primary-dark) !important;
+      box-shadow: inset 0 -3px 0 var(--accent);
+    }
+    header.sticky .bg-gradient-to-br {
+      background-image: none !important;
+      background-color: var(--accent) !important;
+      box-shadow: var(--shadow-1) !important;
+      border-radius: 50% !important;
+    }
+    header.sticky .rounded-full {
+      background-color: rgba(255,255,255,.2) !important;
+      border-color: rgba(255,255,255,.4) !important;
+      color: #fff !important;
+    }
+    header.sticky .view-tab.bg-indigo-600, header.sticky .view-tab.bg-indigo-600 * { color: var(--primary-dark) !important; }
+
+    /* ---------- Sidebar (syllabus map) ---------- */
+    aside#sidebar-nav > div {
+      background-color: var(--surface) !important;
+      border: none !important;
+      box-shadow: var(--shadow-1) !important;
+      border-radius: 4px !important;
+    }
+    .toc-link { transition: background-color .15s, color .15s; border-left: 3px solid transparent; }
+    .toc-link:hover { border-left-color: var(--accent); }
+
+    /* ---------- Hero (indigo banner) ---------- */
+    main > section:first-of-type {
+      background-color: var(--primary) !important;
+      background-image: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+      border: none !important;
+      box-shadow: var(--shadow-2) !important;
+      border-radius: 4px !important;
+      padding: 2rem !important;
+    }
+    main > section:first-of-type [class*="text-slate-"],
+    main > section:first-of-type [class*="text-indigo-"],
+    main > section:first-of-type [class*="text-cyan-"],
+    main > section:first-of-type [class*="text-emerald-"] { color: rgba(255,255,255,.88) !important; }
+    main > section:first-of-type .text-white,
+    main > section:first-of-type h1,
+    main > section:first-of-type strong { color: #fff !important; }
+    main > section:first-of-type a { color: #fff !important; text-decoration: underline; }
+    main > section:first-of-type .bg-clip-text {
+      background: none !important;
+      color: #ff80ab !important;
+      -webkit-text-fill-color: #ff80ab !important;
+    }
+    main > section:first-of-type [class*="bg-slate-9"] {
+      background-color: rgba(255,255,255,.12) !important;
+      border-color: rgba(255,255,255,.3) !important;
+    }
+    main > section:first-of-type .rounded-full {
+      background-color: rgba(255,255,255,.18) !important;
+      border-color: rgba(255,255,255,.4) !important;
+      color: #fff !important;
+      border-radius: 16px !important;
     }
 
-    /* Clean sticky header */
-    header {
-      background-color: color-mix(in srgb, var(--bg-card) 95%, transparent) !important;
-      border-bottom: 1px solid var(--border-soft) !important;
-    }
-
-    /* Sidebar drawer style */
-    aside > div {
-      background-color: var(--bg-card) !important;
-      border: 1px solid var(--border-soft) !important;
-      box-shadow: var(--card-shadow);
-    }
-
-    /* Main content cards: airy, spacious, quiet borders */
+    /* ---------- Cards ---------- */
     article.searchable-card,
     section.searchable-card,
     #section-labs > section,
     #flashcards-quiz > div {
-      background-color: var(--bg-card) !important;
-      border: 1px solid var(--border-soft) !important;
-      box-shadow: var(--card-shadow) !important;
-      padding: 2.25rem !important;
-      border-radius: 0.875rem !important;
+      background-color: var(--surface) !important;
+      border: none !important;
+      box-shadow: var(--shadow-1) !important;
+      border-radius: 4px !important;
+      padding: 1.75rem !important;
+    }
+    div.searchable-card.bg-slate-900\/90 {
+      background-color: var(--surface) !important;
+      border: 1px solid var(--divider) !important;
+      box-shadow: var(--shadow-1);
     }
 
-    /* Hero section: calm editorial masthead without heavy gradients */
-    main > section:first-of-type {
-      background: var(--bg-card) !important;
-      border: 1px solid var(--border-soft) !important;
-      box-shadow: var(--card-shadow) !important;
-      padding: 2.25rem !important;
-      border-radius: 0.875rem !important;
+    /* Flashcard deck: stay at the top and follow the reader while the quiz scrolls */
+    #flashcards-quiz > div:first-child {
+      align-self: start;
+      justify-content: flex-start !important;
     }
+    @media (min-width: 1024px) {
+      #flashcards-quiz > div:first-child { position: sticky; top: 6rem; }
+    }
+    #fc-card-box { min-height: 220px !important; border-width: 2px; border-color: var(--primary-line) !important; background-color: #fff !important; box-shadow: var(--shadow-1); }
+    #fc-card-box:hover { border-color: var(--primary) !important; box-shadow: var(--shadow-2); }
 
-    /* Eliminate "box-inside-box" clutter inside articles:
-       Make inner boxes soft, borderless or whisper-quiet */
-    article.searchable-card div.rounded-xl,
-    article.searchable-card div.rounded-2xl,
-    article.searchable-card div.rounded-lg {
-      background-color: var(--bg-subtle) !important;
-      border: 1px solid transparent !important;
-      box-shadow: none !important;
+    /* Section headings: pink accent bar, like the DSA notes */
+    #app-body main h2 { color: var(--primary-dark) !important; }
+    #app-body main h2::before {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 1.05em;
+      margin-right: 10px;
+      vertical-align: -0.12em;
+      background: var(--accent);
+      border-radius: 2px;
     }
+    #app-body main article > div:first-child h3 { color: var(--primary-dark) !important; }
+    #app-body main div.border-b.border-slate-800 { border-bottom: 2px solid var(--primary-light) !important; }
+    #app-body main strong { font-weight: 700; color: var(--fg); }
+    #app-body main section:first-of-type strong { color: #fff; }
 
-    /* Keep subtle left border on the 3 Ingredients callouts */
-    article.searchable-card div.border-l-4 {
-      background-color: var(--bg-subtle) !important;
-      border-top: none !important;
-      border-right: none !important;
-      border-bottom: none !important;
-      border-left-width: 3px !important;
-      border-left-color: var(--accent-primary) !important;
-      border-radius: 0.5rem !important;
-    }
+    /* Roadmap check-chips + small tags */
+    .font-mono.text-slate-400 { letter-spacing: .2px; }
 
-    /* General dark-utility overrides for Labs, Quiz, Flashcards, and Header */
-    .bg-slate-950,
-    .bg-slate-950\/90,
-    .bg-slate-950\/80,
-    .bg-slate-950\/60,
-    .bg-slate-950\/50,
-    .bg-slate-900,
-    .bg-slate-900\/90,
-    .bg-slate-900\/80,
-    .bg-slate-900\/70,
-    .bg-slate-900\/60,
-    .bg-slate-900\/40 {
-      background-color: var(--bg-subtle) !important;
-      border-color: var(--border-soft) !important;
+    /* ---------- Code ---------- */
+    code {
+      background-color: var(--code-bg);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .88em;
     }
-
-    /* Unify all colored callout boxes to calm, low-contrast neutral/indigo tint */
-    .bg-indigo-950\/20,
-    .bg-indigo-950\/30,
-    .bg-indigo-950\/50,
-    .bg-rose-950\/25,
-    .bg-rose-950\/60,
-    .bg-emerald-950,
-    .bg-emerald-950\/25,
-    .bg-emerald-950\/60,
-    .bg-amber-950\/25 {
-      background-color: var(--bg-subtle) !important;
-      border-color: var(--border-soft) !important;
-    }
-
-    /* Unify all badge backgrounds so they don't look like neon confetti */
-    .bg-indigo-500\/10,
-    .bg-indigo-500\/20,
-    .bg-cyan-500\/10,
-    .bg-cyan-500\/20,
-    .bg-emerald-500\/10,
-    .bg-emerald-500\/20,
-    .bg-amber-500\/20,
-    .bg-rose-500\/20,
-    .bg-purple-500\/20 {
-      background-color: var(--bg-subtle) !important;
-      border-color: var(--border-soft) !important;
-      color: var(--text-muted) !important;
-    }
-
-    /* Harmonize all borders to soft gray */
-    .border-slate-800,
-    .border-slate-800\/90,
-    .border-slate-800\/80,
-    .border-slate-800\/60,
-    .border-slate-700,
-    .border-indigo-500\/30,
-    .border-indigo-500\/40,
-    .border-cyan-500\/30,
-    .border-emerald-500\/30,
-    .border-emerald-500\/40,
-    .border-amber-500\/40,
-    .border-rose-500\/30 {
-      border-color: var(--border-soft) !important;
-    }
-
-    .divide-slate-800\/80 > :not([hidden]) ~ :not([hidden]) {
-      border-color: var(--border-soft) !important;
-    }
-
-    /* Calm, low-contrast typography */
-    .text-white,
-    .text-slate-100,
-    .text-slate-200 {
-      color: var(--text-heading) !important;
-    }
-    .text-slate-300 {
-      color: var(--text-body) !important;
-    }
-    .text-slate-400,
-    .text-slate-500 {
-      color: var(--text-muted) !important;
-    }
-
-    /* Remove rainbow text colors -> use calm slate/indigo/teal hierarchy */
-    .text-indigo-300,
-    .text-indigo-400,
-    .text-purple-300,
-    .text-purple-400 {
-      color: var(--accent-primary) !important;
-    }
-    .text-cyan-300,
-    .text-cyan-400,
-    .text-emerald-200,
-    .text-emerald-300,
-    .text-emerald-400 {
-      color: var(--accent-secondary) !important;
-    }
-    .text-amber-300,
-    .text-amber-400,
-    .text-rose-200,
-    .text-rose-300,
-    .text-rose-400 {
-      color: var(--text-heading) !important;
-    }
-
-    /* Remove gradient text in hero title for a cleaner editorial look */
-    .bg-clip-text {
-      color: var(--accent-primary) !important;
-      background: none !important;
-      -webkit-text-fill-color: var(--accent-primary) !important;
-    }
-
-    /* Primary action buttons stay crisp */
-    .bg-indigo-600,
-    .bg-cyan-600,
-    .bg-emerald-600 {
-      background-color: var(--accent-primary) !important;
-      color: #ffffff !important;
-    }
-    .bg-indigo-600 *,
-    .bg-cyan-600 *,
-    .bg-emerald-600 * {
-      color: #ffffff !important;
-    }
-
-    /* Secondary buttons */
-    .bg-slate-800 {
-      background-color: var(--bg-subtle) !important;
-      color: var(--text-heading) !important;
-      border: 1px solid var(--border-soft) !important;
-    }
-    .bg-slate-800:hover {
-      background-color: var(--bg-muted) !important;
-    }
-
-    /* Code blocks: clean, low-glare surface */
     pre {
-      background-color: var(--bg-code) !important;
-      color: var(--text-heading) !important;
-      border-top: 1px solid var(--border-soft);
+      background-color: var(--code-bg) !important;
+      color: #263238 !important;
+      border-left: 4px solid var(--primary);
+      border-radius: 0 !important;
       font-size: 13.5px !important;
       line-height: 1.65 !important;
     }
+    pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+    pre .text-slate-200, pre .text-slate-300 { color: #263238 !important; }
+    div:has(> pre) { background-color: var(--code-bg) !important; border-color: var(--divider) !important; box-shadow: var(--shadow-1); }
+    div:has(> pre) > div:first-child { background-color: var(--primary-light) !important; border-color: var(--primary-line) !important; }
 
-    /* Tables: clean editorial styling */
+    /* ---------- Tables ---------- */
+    table { border-collapse: collapse; }
     table th {
-      background-color: var(--bg-subtle) !important;
-      color: var(--text-heading) !important;
-      font-weight: 600 !important;
+      background-color: var(--primary-light) !important;
+      color: var(--primary-dark) !important;
+      font-weight: 500 !important;
+      font-size: 0.78rem !important;
+      text-transform: uppercase;
+      letter-spacing: .6px;
     }
-    table td {
-      padding: 1rem !important;
-      vertical-align: top;
-    }
+    table td { padding: .85rem 1rem !important; vertical-align: top; }
+    table tbody tr:hover td { background-color: rgba(63,81,181,.05); }
 
+    /* ---------- Math ---------- */
     .math-font {
       font-family: 'Cambria Math', 'Times New Roman', Georgia, serif;
       letter-spacing: 0.01em;
@@ -276,22 +344,20 @@
     .matrix-bracket {
       display: inline-flex;
       align-items: center;
-      border-left: 1.5px solid var(--text-heading);
-      border-right: 1.5px solid var(--text-heading);
+      border-left: 1.5px solid var(--fg);
+      border-right: 1.5px solid var(--fg);
       padding: 4px 10px;
       position: relative;
       margin: 0 4px;
       vertical-align: middle;
     }
-    .matrix-bracket::before,
-    .matrix-bracket::after {
+    .matrix-bracket::before, .matrix-bracket::after {
       content: '';
       position: absolute;
-      top: 0;
-      bottom: 0;
+      top: 0; bottom: 0;
       width: 5px;
-      border-top: 1.5px solid var(--text-heading);
-      border-bottom: 1.5px solid var(--text-heading);
+      border-top: 1.5px solid var(--fg);
+      border-bottom: 1.5px solid var(--fg);
     }
     .matrix-bracket::before { left: 0; }
     .matrix-bracket::after { right: 0; }
@@ -299,32 +365,23 @@
       display: inline-grid;
       gap: 4px 12px;
       text-align: center;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-family: 'Roboto Mono', ui-monospace, monospace;
       font-size: 0.9rem;
     }
-    .code-scroll::-webkit-scrollbar {
-      height: 6px;
-      width: 6px;
-    }
-    .code-scroll::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-    .cell-highlight-row {
-      background-color: rgba(67, 56, 202, 0.1) !important;
-      border-color: #6366f1 !important;
-    }
-    .cell-highlight-col {
-      background-color: rgba(15, 118, 110, 0.1) !important;
-      border-color: #14b8a6 !important;
-    }
-    .cell-highlight-out {
-      background-color: rgba(15, 118, 110, 0.15) !important;
-      border-color: #0f766e !important;
-    }
+
+    /* Lab cell highlights */
+    .cell-highlight-row { background-color: var(--primary-light) !important; border-color: var(--primary) !important; }
+    .cell-highlight-col { background-color: var(--cyan-bg) !important; border-color: var(--cyan) !important; }
+    .cell-highlight-out { background-color: var(--good-bg) !important; border-color: var(--good) !important; }
+
+    /* ---------- Scrollbars ---------- */
+    .code-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+    .code-scroll::-webkit-scrollbar-thumb { background: var(--primary-line); border-radius: 4px; }
+
     @media print {
       .no-print { display: none !important; }
       .print-break { page-break-before: always; }
+      body#app-body { background: #fff !important; }
     }
   </style>
 </head>
@@ -365,9 +422,6 @@
           <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           <button id="clear-search-btn" type="button" class="hidden absolute right-2 top-1.5 text-slate-400 hover:text-white text-xs" title="Clear search">&times;</button>
         </div>
-        <button id="theme-toggle-btn" type="button" class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition" title="Toggle High-Contrast / Light Mode">
-          <span id="theme-icon">☀️</span>
-        </button>
         <button id="print-btn" type="button" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white hover:border-slate-700 transition">
           <span>🖨️</span><span>Print</span>
         </button>
@@ -1969,27 +2023,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
         });
       }
 
-      // --- 4. High-Contrast / Theme Toggle & Print ---
-      var themeBtn = document.getElementById('theme-toggle-btn');
-      var themeIcon = document.getElementById('theme-icon');
-      var appBody = document.getElementById('app-body');
-      var isDark = false;
-      if (themeIcon) themeIcon.textContent = '🌙';
-      if (themeBtn && appBody) {
-        themeBtn.addEventListener('click', function() {
-          isDark = !isDark;
-          if (isDark) {
-            appBody.classList.add('soft-dark');
-            if (themeIcon) themeIcon.textContent = '☀️';
-            showToast('Switched to Soft Low-Glare Dark Mode');
-          } else {
-            appBody.classList.remove('soft-dark');
-            if (themeIcon) themeIcon.textContent = '🌙';
-            showToast('Switched to Warm Paper Light Mode');
-          }
-        });
-      }
-
+      // --- 4. Print ---
       var printBtn = document.getElementById('print-btn');
       if (printBtn) {
         printBtn.addEventListener('click', function() {
