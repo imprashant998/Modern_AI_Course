@@ -1749,6 +1749,11 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           </div>
         </div>
 
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Read the question and answer it out loud first. Open it for a hint, then reveal the answer, a likely follow-up and links to go deeper.
+          Everything here stays within Lectures 2 and 3; later lectures will add their own questions.
+        </p>
+
         <!-- Category Filter Bar for Interview Q&As -->
         <div class="flex flex-wrap items-center gap-2 no-print">
           <span class="text-xs text-slate-400 mr-1">Filter Topic:</span>
@@ -1756,7 +1761,7 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           <button type="button" data-qa-filter="supervised" class="qa-filter-btn px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition">Supervised ML &amp; Loss</button>
           <button type="button" data-qa-filter="linalg" class="qa-filter-btn px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition">Linear Algebra &amp; Complexity</button>
           <button type="button" data-qa-filter="pytorch" class="qa-filter-btn px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition">PyTorch &amp; Tensors</button>
-          <button type="button" data-qa-filter="llm" class="qa-filter-btn px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition">Transformers &amp; Modern AI</button>
+          <button type="button" data-qa-filter="llm" class="qa-filter-btn px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition">Modern AI Connections</button>
         </div>
 
         <!-- Interview Q&A Container (Populated & Interactive) -->
@@ -2296,128 +2301,282 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
       renderAXXB('');
 
       // --- 9. INTERVIEW PREPARATION Q&A DATA & RENDERING ---
+      // Scope: Lectures 2 and 3 only (supervised ML recipe, linear algebra, PyTorch tensors).
+      var REF = {
+        lec2: { t: 'Lecture 2 video', u: 'https://www.youtube.com/watch?v=xIQkf7ZGQhM' },
+        lec3: { t: 'Lecture 3 video', u: 'https://www.youtube.com/watch?v=tlbLH77GFLQ' },
+        site: { t: 'Course site', u: 'https://modernaicourse.org/' },
+        b3: { t: '3Blue1Brown: Essence of Linear Algebra', u: 'https://www.3blue1brown.com/topics/linear-algebra' },
+        cs229: { t: 'Stanford CS229 linear algebra review (PDF)', u: 'https://cs229.stanford.edu/section/cs229-linalg.pdf' },
+        zth: { t: 'Karpathy: Neural Networks Zero to Hero', u: 'https://karpathy.ai/zero-to-hero.html' },
+        ptTensors: { t: 'PyTorch: torch.Tensor', u: 'https://docs.pytorch.org/docs/stable/tensors.html' },
+        ptDtype: { t: 'PyTorch: tensor dtypes', u: 'https://docs.pytorch.org/docs/stable/tensor_attributes.html' },
+        ptMatmul: { t: 'PyTorch: torch.matmul', u: 'https://docs.pytorch.org/docs/stable/generated/torch.matmul.html' },
+        ptBcast: { t: 'PyTorch: broadcasting semantics', u: 'https://docs.pytorch.org/docs/stable/notes/broadcasting.html' },
+        ptOuter: { t: 'PyTorch: torch.outer', u: 'https://docs.pytorch.org/docs/stable/generated/torch.outer.html' },
+        ptUnsq: { t: 'PyTorch: torch.unsqueeze', u: 'https://docs.pytorch.org/docs/stable/generated/torch.unsqueeze.html' },
+        ptCE: { t: 'PyTorch: CrossEntropyLoss', u: 'https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html' }
+      };
+
       var interviewQAs = [
+        // ---------------- Supervised ML ----------------
         {
-          id: 1,
-          cat: 'supervised',
-          level: 'Foundational',
-          q: '1. How does the Supervised Machine Learning paradigm fundamentally differ from traditional programming, and what is the distinction between the "ML Algorithm" and the "ML Program"?',
-          a: 'In <strong>traditional programming</strong>, an engineer starts with a formal <em>specification</em> of desired behavior (e.g., sorting a list), designs explicit step-by-step logic, and writes code. In <strong>supervised ML</strong>, we lack a formal specification for tasks like image classification or chat generation; instead, we provide a <strong>Training Set</strong> of (input, desired output) examples into an <strong>ML Algorithm</strong> (the meta-program consisting of Model Class + Loss Function + Optimization Procedure), which automatically produces the <strong>"Program" (the trained Model <em>h</em>)</strong>—a mathematical function mapping inputs to predicted outputs.'
+          cat: 'supervised', level: 'Foundational',
+          q: 'How does supervised machine learning differ from traditional programming? What is the difference between the “ML algorithm” and the “program” it produces?',
+          hint: 'Ask where the program comes from in each case: written by hand from a specification, or produced from examples.',
+          a: 'In <strong>traditional programming</strong>, we start from a formal <em>specification</em> of the desired behavior (e.g. sorting a list), design step-by-step logic, and write it as code. In <strong>supervised ML</strong>, we have no formal specification for tasks like recognizing a cat or answering a question. Instead, we provide a <strong>training set</strong> of (input, desired output) examples to an <strong>ML algorithm</strong>, the meta-program made of a model class, a loss function and an optimization procedure. The algorithm produces the <strong>“program”</strong>: a trained model <em>h</em>, a mathematical function from inputs to predicted outputs.',
+          f: '<strong>Name a task where you would still write the program by hand.</strong> Anything with an exact specification and a known algorithm: sorting, parsing a file format, computing a checksum. ML adds cost and error where exactness is available.',
+          refs: ['lec2']
         },
         {
-          id: 2,
-          cat: 'supervised',
-          level: 'Foundational',
-          q: '2. Why is Language Modeling (next-word prediction) considered a "one-to-many" problem compared to Image Classification, and how does that shape model outputs?',
-          a: 'In standard image classification, a photo of a cat has a single deterministic ground-truth label (<code>"cat"</code>). In language modeling, a prefix like <code>"the quick"</code> has no single uniquely correct next word—many words (<em>brown, fox, cat, way</em>) are valid continuations across a corpus. Consequently, the model <em>h</em> must output a <strong>probability distribution</strong> over the entire vocabulary rather than a hard deterministic label.'
+          cat: 'supervised', level: 'Foundational',
+          q: 'Why is language modeling (next-word prediction) a “one-to-many” problem compared to image classification, and how does that shape what the model outputs?',
+          hint: 'Given the input, is there exactly one correct output?',
+          a: 'A photo of a cat has one ground-truth label, <code>"cat"</code>. A prefix like <code>"the quick"</code> has no single correct next word: <em>brown</em>, <em>fox</em> and <em>way</em> all occur after it in real text. So the model <em>h</em> outputs a <strong>probability distribution</strong> over the whole vocabulary rather than a single hard label.',
+          f: '<strong>If the model outputs a distribution, how do you get actual text?</strong> Pick a word from it (the most likely one, or sample in proportion to the probabilities), append it to the prefix, and repeat.',
+          refs: ['lec2']
         },
         {
-          id: 3,
-          cat: 'supervised',
-          level: 'Intermediate',
-          q: '3. What are the Three Ingredients of every Machine Learning algorithm, and which ingredient varies the most in Modern AI?',
-          a: 'Every ML algorithm is defined by: <strong>(1) The Model &amp; Model Class (Architecture)</strong> <em>h : Inputs &rarr; Predicted Outputs</em>, <strong>(2) The Loss Function</strong> <em>L : Predicted &times; Desired &rarr; ℝ₊</em>, and <strong>(3) The Optimization Procedure</strong> that minimizes total training loss. As emphasized in Lecture 2 (Page 3), in modern AI the loss function (<strong>Cross-Entropy Loss</strong>) and optimization procedure (<strong>Gradient Descent / SGD / Adam</strong>) are virtually always fixed—it is the <strong>Model Architecture (Model Class)</strong> and training data that vary.'
+          cat: 'supervised', level: 'Intermediate',
+          q: 'What are the three ingredients of every machine learning algorithm, and which one varies most in modern AI?',
+          hint: 'Model, loss, and one more. Then ask which of the three actually changes from one modern system to the next.',
+          a: 'Every ML algorithm is defined by <strong>(1) the model class</strong> (the architecture) <em>h : inputs → predicted outputs</em>, <strong>(2) the loss function</strong> <em>L : predicted × desired → ℝ₊</em>, and <strong>(3) the optimization procedure</strong> that finds the model in the class with low total training loss. As Lecture 2 (page 3) emphasizes, in modern AI the loss is almost always <strong>cross-entropy</strong> and the optimizer is almost always a form of <strong>gradient descent</strong>. What varies is the <strong>model architecture</strong> and the training data.',
+          f: '<strong>Why is it convenient that the loss and optimizer are mostly fixed?</strong> Tooling, intuition and infrastructure carry over between projects, so research effort concentrates on architectures and data.',
+          refs: ['lec2']
         },
         {
-          id: 4,
-          cat: 'supervised',
-          level: 'Intermediate',
-          q: '4. Why don’t we train classification or language models directly with 0-1 classification error instead of Cross-Entropy Loss?',
-          a: 'A 0-1 loss (0 if <code>argmax h(x) == y</code>, 1 otherwise) is a piecewise-constant step function: its gradient with respect to model parameters is <strong>zero almost everywhere</strong> and undefined at the threshold, giving Gradient Descent no directional signal on how to improve weights. Furthermore, 0-1 loss only cares about the top class rather than calibrating continuous probabilities needed for language modeling.'
+          cat: 'supervised', level: 'Intermediate',
+          q: 'Why don’t we train classifiers directly on 0-1 error (right or wrong) instead of cross-entropy loss?',
+          hint: 'What is the gradient of a step function?',
+          a: '0-1 loss is 0 if the top prediction is right and 1 otherwise. As a function of the model parameters it is piecewise constant: small parameter changes usually do not change it at all, so its gradient is <strong>zero almost everywhere</strong> and gives gradient-based optimization no direction to move in. It also ignores how confident the model is, which matters when we need calibrated probabilities, as in language modeling. Cross-entropy is smooth and keeps rewarding more probability on the correct answer.',
+          f: '<strong>Cross-entropy is a “surrogate” loss. A surrogate for what?</strong> For the error rate we actually care about. Driving cross-entropy down tends to drive the error rate down too.',
+          refs: ['lec2', 'ptCE']
         },
         {
-          id: 5,
-          cat: 'supervised',
-          level: 'Foundational',
-          q: '5. A Python dictionary / database lookup table achieves 0.0 training loss on any consistent dataset. Why is it a terrible machine learning model?',
-          a: 'Because the goal of machine learning is <strong>generalization</strong>—achieving low loss on <em>unseen examples</em> drawn from the task distribution (evaluated via a held-out <strong>Test Set</strong>), not merely memorizing the training set. A lookup table has zero inductive bias to interpolate or extrapolate to novel inputs.'
+          cat: 'supervised', level: 'Foundational',
+          q: 'A Python dictionary that stores every training pair reaches zero training loss. Why is it a terrible machine learning model?',
+          hint: 'Compare loss on the training set with loss on inputs the model has never seen.',
+          a: 'The goal of ML is <strong>generalization</strong>: low loss on <em>new</em> inputs from the same task, measured on a held-out <strong>test set</strong>. A lookup table only memorizes. For any input it has not seen, it has no answer at all, so its test performance is useless even though its training loss is perfect.',
+          f: '<strong>How would you detect memorization in practice?</strong> A large gap between training and test performance.',
+          refs: ['lec2']
         },
         {
-          id: 6,
-          cat: 'llm',
-          level: 'Senior/Staff',
-          q: '6. In Modern General AI (LLMs), how does training evaluation differ from practical downstream evaluation?',
-          a: 'LLMs are pre-trained strictly to minimize <strong>next-token cross-entropy loss</strong> on text prefixes. However, in practice, we evaluate them on <strong>downstream tasks</strong> (e.g., solving multi-step math problems, writing code, following instructions) where responses are generated autoregressively by sampling from predicted distributions. One of the most fortuitous discoveries in modern AI is that driving down next-token pre-training loss reliably unlocks downstream reasoning and problem-solving capabilities.'
+          cat: 'supervised', level: 'Intermediate',
+          q: 'Your model gets 99% accuracy on the training set but 70% on the test set. What is happening, and what do you check first?',
+          hint: 'Think of the dictionary model from Lecture 2. Then ask whether the data split itself could be the problem.',
+          a: 'The model fits the training data much better than new data, a milder version of the lookup-table failure. Before blaming the model, rule out data problems: <strong>(1) a broken split</strong>, such as duplicate or near-duplicate examples on both sides, or label information leaking into the inputs, and <strong>(2) a distribution mismatch</strong>, where test data comes from a different source than training data. If both are clean, the gap is real overfitting. Options are more or more varied data, a simpler model class, or stopping training based on a validation set. Later lectures cover regularization in detail.',
+          f: '<strong>What if training accuracy were also 70%?</strong> Then the model is not even fitting the training data: the model class may be too weak, or optimization is not working (bug, learning rate, too few steps).',
+          refs: ['lec2']
         },
         {
-          id: 7,
-          cat: 'linalg',
-          level: 'Foundational',
-          q: '7. Explain the two dual interpretations of Matrix-Vector Multiplication (Ax) where A ∈ ℝ^(m×n) and x ∈ ℝ^n.',
-          a: '<strong>Interpretation 1 (Row-wise / Collection of Inner Products):</strong> Each entry <em>(Ax)ᵢ = aᵢᵀx</em> is the inner product between the <em>i</em>-th row of <em>A</em> and vector <em>x</em> (measuring similarity/projection of <em>x</em> onto each row).<br/><strong>Interpretation 2 (Column-wise / Linear Combination of Columns):</strong> <em>Ax = x₁a₁ + x₂a₂ + … + xₙaₙ</em> is a weighted sum of the <em>n</em> columns of <em>A</em>, where the weights are the entries of <em>x</em>. Thus, the range of <em>Ax</em> is the <em>column space</em> of <em>A</em>.'
+          cat: 'supervised', level: 'Foundational',
+          q: 'Why should the test set be used only once, at the very end? What is a validation set for?',
+          hint: 'If you keep adjusting choices until test accuracy goes up, is the test set still “unseen”?',
+          a: 'The test set is our estimate of performance on unseen data. Every decision made by looking at it (which model, which settings, when to stop training) fits those choices a little to the test set. The final number then becomes optimistically biased and no longer measures generalization. A <strong>validation set</strong> is a separate held-out split used for those decisions. The test set is used once, for the final report.',
+          refs: ['lec2']
         },
         {
-          id: 8,
-          cat: 'linalg',
-          level: 'Foundational',
-          q: '8. Explain the two dual interpretations of Vector-Matrix Multiplication (xᵀA) where x ∈ ℝ^m and A ∈ ℝ^(m×n).',
-          a: '<strong>Interpretation 1 (Inner Products with Columns):</strong> The result is a 1×n row vector whose <em>j</em>-th entry is the inner product <em>xᵀaⱼ</em> of <em>x</em> with the <em>j</em>-th column of <em>A</em>.<br/><strong>Interpretation 2 (Linear Combination of Rows):</strong> <em>xᵀA = x₁a₁ᵀ + x₂a₂ᵀ + … + xₘaₘᵀ</em> is a weighted linear combination of the <strong>rows of A</strong>, weighted by the entries of <em>x</em>.'
+          cat: 'supervised', level: 'Intermediate',
+          q: 'Write down the cross-entropy loss for one classification example. What is it when the model gives the correct class probability 0.9, and when it gives 0.1?',
+          hint: 'Only one entry of the predicted distribution appears in the formula. Which one?',
+          a: 'If the model outputs probabilities <em>p</em> over the classes and the true class is <em>y</em>, the loss is <strong><em>L = −log p<sub>y</sub></em></strong> (natural log). Only the probability on the correct class matters.<br/>• p<sub>y</sub> = 0.9 gives L = −log 0.9 ≈ <strong>0.105</strong>.<br/>• p<sub>y</sub> = 0.1 gives L = −log 0.1 ≈ <strong>2.303</strong>.<br/>As p<sub>y</sub> → 1 the loss goes to 0. As p<sub>y</sub> → 0 it grows without bound, so confident wrong answers are punished hard. You can try this with the loss slider in the Interactive Labs section.',
+          f: '<strong>What does PyTorch’s <code>nn.CrossEntropyLoss</code> expect as input?</strong> Raw scores (logits), not probabilities, because it applies the normalization internally. Passing probabilities still runs but trains badly, which makes it a common bug.',
+          refs: ['lec2', 'ptCE']
         },
         {
-          id: 9,
-          cat: 'linalg',
-          level: 'Intermediate',
-          q: '9. What are the three interpretations of Matrix-Matrix Multiplication (AB) covered in Lecture 3 (plus the 4th outer-product view)?',
-          a: 'For <em>A ∈ ℝ^(m×n)</em> and <em>B ∈ ℝ^(n×p)</em>:<br/>1. <strong>Collection of Inner Products:</strong> The (i,j) entry is <em>aᵢᵀbⱼ</em> (row <em>i</em> of A dotted with col <em>j</em> of B).<br/>2. <strong>Collection of Matrix-Vector Products:</strong> <em>AB = [Ab₁ | Ab₂ | … | Abₚ]</em> (A applied to each column of B; each output column is a linear combination of columns of A).<br/>3. <strong>Collection of Vector-Matrix Products:</strong> Each row <em>i</em> of AB is <em>aᵢᵀB</em> (a linear combination of rows of B).<br/>4. <strong>Bonus (Sum of Outer Products):</strong> <em>AB = ∑ₖ₌₁ⁿ aₖ bₖᵀ</em> (sum of <em>n</em> rank-1 matrices of shape m×p).'
+          cat: 'supervised', level: 'Foundational',
+          q: 'In next-word prediction, what are the input and the target of one training example? How many examples does a sequence of T tokens give you?',
+          hint: 'Slide along the sentence: everything so far is the input, and the next word is the target.',
+          a: 'The input is a <strong>prefix</strong> of the text and the target is the <strong>next token</strong>. From “the quick brown fox” you get (“the” → “quick”), (“the quick” → “brown”) and (“the quick brown” → “fox”). A sequence of T tokens gives <strong>T − 1</strong> training pairs, one for each position after the first. Nobody labels anything: the targets come from the text itself. That is why this is called <em>self-supervised</em>, even though the training algorithm is ordinary supervised learning.',
+          refs: ['lec2', 'zth']
         },
         {
-          id: 10,
-          cat: 'llm',
-          level: 'Senior/Staff',
-          q: '10. [High-Yield Transformer Question] Given a data/token matrix X ∈ ℝ^(m×n) where each row is a token embedding, what is the structural difference between left-multiplying (AX) and right-multiplying (XB)?',
-          a: '<strong>Left-multiplication (AX):</strong> Each row of <em>AX</em> is <em>aᵢᵀX</em>, which is a linear combination of <strong>all rows of X</strong>. Therefore, <em>AX</em> <strong>mixes information across rows (tokens/examples)</strong>. In a Transformer, the Self-Attention matrix <em>A = Softmax(QKᵀ/√d)</em> multiplies <em>V</em> on the left (<em>AV</em>) specifically to mix context across tokens!<br/><strong>Right-multiplication (XB):</strong> Each row of <em>XB</em> is <em>xᵢᵀB</em>, meaning <em>B</em> is applied <strong>independently to each row of X</strong> without any cross-row mixing. In a Transformer or MLP, linear projection layers (<em>XW</em>) multiply on the right to transform features independently per token.'
+          cat: 'supervised', level: 'Foundational',
+          q: 'What is the difference between a model and a model class? Give a concrete example.',
+          hint: 'One is a set of functions; the other is a single function from that set.',
+          a: 'A <strong>model class</strong> is a family of functions indexed by parameters θ. For example, all linear functions <em>h<sub>θ</sub>(x) = θᵀx</em> for θ ∈ ℝⁿ. A <strong>model</strong> is one member of that family, with specific parameter values. Training searches the model class for the parameters that minimize training loss. Choosing an architecture chooses the class; training chooses the model.',
+          refs: ['lec2']
         },
         {
-          id: 11,
-          cat: 'linalg',
-          level: 'Senior/Staff',
-          q: '11. [Complexity Trap] Matrix multiplication is associative: (AB)x = A(Bx). Why does parenthesization order matter hugely in ML systems?',
-          a: 'While <em>(AB)x</em> and <em>A(Bx)</em> produce the exact same numerical vector, their computational cost differs by orders of magnitude! Suppose <em>A, B ∈ ℝ^(n×n)</em> and <em>x ∈ ℝ^(n×1)</em>:<br/>• Computing <strong>(AB)x</strong> first multiplies two n×n matrices in <strong>O(n³)</strong> FLOPs, then a matrix-vector product in O(n²).<br/>• Computing <strong>A(Bx)</strong> performs two sequential matrix-vector products: <em>y = Bx</em> in O(n²) and <em>Ay</em> in O(n²), taking only <strong>O(n²)</strong> FLOPs total! In LoRA and low-rank attention, multiplying in the right associative order avoids materializing huge dense matrices.'
+          cat: 'supervised', level: 'Intermediate',
+          q: 'Why does a loss function return a single non-negative number, and how do per-example losses become the training objective?',
+          hint: 'What does an optimizer need in order to say one model is better than another?',
+          a: 'Optimization compares candidate models, and real numbers can be ordered: a loss of 0.3 is better than 0.7. A vector of scores has no single notion of “better”. Non-negativity, with 0 meaning perfect, is a convention that makes values easy to read. The training objective is the <strong>average of per-example losses</strong> over the training set, <em>(1/N) ∑ᵢ L(h(xᵢ), yᵢ)</em>. The optimization procedure looks for the model in the class that minimizes it.',
+          refs: ['lec2']
+        },
+
+        // ---------------- Linear algebra ----------------
+        {
+          cat: 'linalg', level: 'Foundational',
+          q: 'Explain the two interpretations of the matrix-vector product Ax, where A ∈ ℝ^(m×n) and x ∈ ℝⁿ.',
+          hint: 'Rows of A dotted with x, or columns of A weighted by the entries of x.',
+          a: '<strong>Row view (inner products):</strong> entry <em>(Ax)ᵢ = aᵢᵀx</em>, the inner product of row <em>i</em> of A with x.<br/><strong>Column view (linear combination):</strong> <em>Ax = x₁a₁ + x₂a₂ + … + xₙaₙ</em>, a weighted sum of the columns of A, with the entries of x as weights.',
+          f: '<strong>Which view shows that Ax always lies in the span of A’s columns?</strong> The column view: Ax is literally a combination of the columns.',
+          refs: ['lec3', 'b3']
         },
         {
-          id: 12,
-          cat: 'pytorch',
-          level: 'Intermediate',
-          q: '12. How does PyTorch handle 1D tensors (`torch.tensor([1, 2, 3])`) differently from mathematical column/row vectors, and what happens if you call `.T` on a 1D tensor?',
-          a: 'In mathematical linear algebra, <em>x ∈ ℝ^n</em> is strictly an <em>n×1</em> column vector and <em>xᵀ</em> is a <em>1×n</em> row vector. In PyTorch, a 1D tensor has shape <code>(n,)</code> and does <strong>not</strong> distinguish between row and column vectors—the <code>@</code> operator automatically infers inner product (<code>x @ y</code>), matrix-vector (<code>A @ x</code>), or vector-matrix (<code>z @ A</code>) from position. Calling <code>x.T</code> on a 1D tensor in PyTorch is a no-op (returns shape <code>(n,)</code>) and triggers a UserWarning! To get an explicit 2D column or row vector in PyTorch, use <code>x[:, None]</code> / <code>x.unsqueeze(1)</code> (shape <code>(n, 1)</code>) or <code>x[None, :]</code> / <code>x.unsqueeze(0)</code> (shape <code>(1, n)</code>).'
+          cat: 'linalg', level: 'Foundational',
+          q: 'Explain the two interpretations of the vector-matrix product xᵀA, where x ∈ ℝᵐ and A ∈ ℝ^(m×n).',
+          hint: 'Now x touches A from the left: it pairs with columns, or weights rows.',
+          a: '<strong>Inner products with columns:</strong> the result is a 1×n row vector whose entry <em>j</em> is <em>xᵀaⱼ</em>, the inner product of x with column <em>j</em> of A.<br/><strong>Linear combination of rows:</strong> <em>xᵀA = x₁a₁ᵀ + … + xₘaₘᵀ</em>, a weighted sum of the <strong>rows of A</strong>.',
+          refs: ['lec3']
         },
         {
-          id: 13,
-          cat: 'pytorch',
-          level: 'Foundational',
-          q: '13. Translate between 1-indexed Math notation and 0-indexed PyTorch slicing for matrix A ∈ ℝ^(m×n).',
-          a: '• Element <em>Aᵢⱼ</em> (math, 1-indexed) &rArr; <code>A[i-1, j-1]</code> (PyTorch, 0-indexed). E.g., <em>A₁₂</em> is <code>A[0, 1]</code>.<br/>• <em>i</em>-th row <em>aᵢᵀ</em> &rArr; <code>A[i-1, :]</code>.<br/>• <em>j</em>-th column <em>aⱼ</em> &rArr; <code>A[:, j-1]</code>.'
+          cat: 'linalg', level: 'Intermediate',
+          q: 'What are the interpretations of the matrix-matrix product AB from Lecture 3 (plus the outer-product view)?',
+          hint: 'Inner products per entry, matrix-vector products per column, vector-matrix products per row.',
+          a: 'For <em>A ∈ ℝ^(m×n)</em> and <em>B ∈ ℝ^(n×p)</em>:<br/>1. <strong>Inner products:</strong> entry (i, j) is <em>aᵢᵀbⱼ</em>, row i of A with column j of B.<br/>2. <strong>Matrix-vector products:</strong> <em>AB = [Ab₁ | … | Abₚ]</em>. Each column of the output is A applied to a column of B.<br/>3. <strong>Vector-matrix products:</strong> row i of AB is <em>aᵢᵀB</em>, a combination of the rows of B.<br/>4. <strong>Bonus, sum of outer products:</strong> <em>AB = ∑ₖ aₖbₖᵀ</em>, a sum of n rank-1 m×p matrices, using column k of A and row k of B.',
+          refs: ['lec3', 'b3']
         },
         {
-          id: 14,
-          cat: 'pytorch',
-          level: 'Intermediate',
-          q: '14. What happens in PyTorch if you initialize a tensor with only integers like `torch.tensor([[7, 3, 2], [2, 4, 8]])` vs including a float `1.0`?',
-          a: 'As demonstrated in Lecture 3 live coding, passing all Python integers creates a <code>torch.int64</code> (Long) tensor. Many deep learning operations (gradients, neural network layers, matrix decompositions) require floating-point tensors (<code>torch.float32</code>). Including at least one float literal (e.g., <code>7.0</code> or <code>1.</code>) or passing <code>dtype=torch.float32</code> ensures PyTorch creates a floating-point tensor.'
+          cat: 'linalg', level: 'Foundational',
+          q: 'A ∈ ℝ^(32×128), B ∈ ℝ^(128×64), x ∈ ℝ⁶⁴. Which of AB, BA, ABx and xᵀB are valid, and what shape does each produce?',
+          hint: 'Write the shapes side by side. The inner pair must agree; the outer pair is the result.',
+          a: '• <strong>AB</strong>: (32×128)(128×64) is valid and gives <strong>32×64</strong>.<br/>• <strong>BA</strong>: (128×64)(32×128) is invalid, since 64 ≠ 32.<br/>• <strong>ABx</strong>: (32×64)(64) is valid and gives a vector in <strong>ℝ³²</strong>.<br/>• <strong>xᵀB</strong>: (1×64)(128×64) is invalid, since 64 ≠ 128. (xᵀBᵀ would be valid and give 1×128.)',
+          f: '<strong>How do you avoid shape bugs when you code this?</strong> Say the shapes out loud as you write, and check <code>.shape</code> after each step. Most bugs in ML code are shape bugs.',
+          refs: ['lec3']
         },
         {
-          id: 15,
-          cat: 'linalg',
-          level: 'Foundational',
-          q: '15. Prove why (AB)ᵀ = BᵀAᵀ using index notation.',
-          a: 'By definition of transpose, the (i,j) entry of <em>(AB)ᵀ</em> is the (j,i) entry of <em>AB</em>:<br/><em>((AB)ᵀ)ᵢⱼ = (AB)ⱼᵢ = ∑ₖ₌₁ⁿ Aⱼₖ Bₖᵢ</em>.<br/>Since <em>Aⱼₖ = (Aᵀ)ₖⱼ</em> and <em>Bₖᵢ = (Bᵀ)ᵢₖ</em>, we can rewrite the sum as:<br/><em>∑ₖ₌₁ⁿ (Bᵀ)ᵢₖ (Aᵀ)ₖⱼ = (BᵀAᵀ)ᵢⱼ</em>. Thus <em>(AB)ᵀ = BᵀAᵀ</em>.'
+          cat: 'linalg', level: 'Intermediate',
+          q: 'How many multiply-adds does AB take for A ∈ ℝ^(m×n) and B ∈ ℝ^(n×p)? Use that to estimate the cost of a linear layer on a batch.',
+          hint: 'How many entries does the output have, and how long is each inner product?',
+          a: 'The output has m·p entries, each an inner product of length n, so AB costs <strong>m·n·p multiply-adds</strong>, usually quoted as <strong>about 2mnp FLOPs</strong> (one multiply and one add each). A linear layer <em>XW</em> with X ∈ ℝ^(N×d<sub>in</sub>) and W ∈ ℝ^(d<sub>in</sub>×d<sub>out</sub>) costs about 2·N·d<sub>in</sub>·d<sub>out</sub> FLOPs. With N = 4096 rows and d<sub>in</sub> = d<sub>out</sub> = 1024, that is about <strong>8.6 GFLOPs</strong>.',
+          refs: ['lec3']
         },
         {
-          id: 16,
-          cat: 'llm',
-          level: 'Foundational',
-          q: '16. What is a "Tensor" in PyTorch vs. pure mathematics, and why do GPUs dominate LLM training and inference?',
-          a: 'In PyTorch, a <strong>Tensor</strong> is simply a multi-dimensional array (1D = vector, 2D = matrix, 3D = stack of matrices such as <code>(batch, seq_len, d_model)</code>). Because ~99% of all FLOPs in modern LLMs consist of dense matrix-matrix multiplications (<code>@</code>), GPUs excel because they are massively parallel throughput engines specifically architected to execute thousands of fused multiply-add matrix operations simultaneously.'
+          cat: 'linalg', level: 'Senior/Staff',
+          q: 'Matrix multiplication is associative: (AB)x = A(Bx). Why does the order of evaluation matter so much in practice?',
+          hint: 'Count FLOPs for n×n times n×n, versus n×n times a vector.',
+          a: 'Both orders give the same vector, but the cost is very different. For A, B ∈ ℝ^(n×n) and x ∈ ℝⁿ:<br/>• <strong>(AB)x</strong> first multiplies two n×n matrices, which is <strong>O(n³)</strong>, then does a matrix-vector product.<br/>• <strong>A(Bx)</strong> does two matrix-vector products, each <strong>O(n²)</strong>.<br/>For n = 4096 that is roughly a 4000× difference. Choosing the cheap order, and never building a large matrix you only need to apply to a vector, is a standard trick in ML code.',
+          refs: ['lec3']
+        },
+        {
+          cat: 'linalg', level: 'Foundational',
+          q: 'Is matrix multiplication commutative? Give a counterexample, and a case where AB = BA.',
+          hint: 'Start with shapes: is BA even defined? Then try two small 2×2 matrices.',
+          a: 'No. Often BA is not even defined (for example A is 2×3 and B is 3×4). Even for square matrices it usually fails: with A = [[1, 1], [0, 1]] and B = [[1, 0], [1, 1]], <strong>AB = [[2, 1], [1, 1]]</strong> but <strong>BA = [[1, 1], [1, 2]]</strong>. Pairs that do commute include any matrix with the identity, a matrix with itself, and two diagonal matrices. Associativity and distributivity do hold, as listed in Lecture 3.',
+          refs: ['lec3']
+        },
+        {
+          cat: 'linalg', level: 'Foundational',
+          q: 'Prove that (AB)ᵀ = BᵀAᵀ using index notation.',
+          hint: 'Write the (i, j) entry of each side as a sum over k.',
+          a: 'The (i, j) entry of <em>(AB)ᵀ</em> is the (j, i) entry of <em>AB</em>: <em>((AB)ᵀ)ᵢⱼ = (AB)ⱼᵢ = ∑ₖ Aⱼₖ Bₖᵢ</em>. Since <em>Aⱼₖ = (Aᵀ)ₖⱼ</em> and <em>Bₖᵢ = (Bᵀ)ᵢₖ</em>, this equals <em>∑ₖ (Bᵀ)ᵢₖ (Aᵀ)ₖⱼ = (BᵀAᵀ)ᵢⱼ</em>.',
+          refs: ['lec3', 'cs229']
+        },
+        {
+          cat: 'linalg', level: 'Foundational',
+          q: 'What does the inner product xᵀy measure, and where does it show up in ML?',
+          hint: 'Think about the angle between the two vectors.',
+          a: 'Algebraically it is <em>∑ᵢ xᵢyᵢ</em>. Geometrically, <em>xᵀy = ‖x‖‖y‖cos θ</em>, so for fixed lengths it measures how aligned the vectors are: positive when they point the same way, 0 when orthogonal, negative when opposite. In ML it is the basic scoring operation. A linear model predicts θᵀx, every entry of a matrix product is an inner product, and similarity between learned vectors is often a (normalized) inner product.',
+          refs: ['lec3', 'b3']
+        },
+        {
+          cat: 'linalg', level: 'Intermediate',
+          q: 'X ∈ ℝ^(m×n) holds m examples as rows and θ ∈ ℝⁿ are the weights of a linear model. How do you compute all m predictions at once, and why is that better than a Python loop?',
+          hint: 'Which interpretation of a matrix-vector product gives one inner product per row?',
+          a: 'The predictions are <strong>Xθ ∈ ℝᵐ</strong>. By the row view, entry i is <em>xᵢᵀθ</em>, the prediction for example i. In PyTorch that is <code>X @ theta</code>. One matrix-vector product hands the whole computation to optimized parallel code (on CPU or GPU), while a Python loop pays interpreter overhead for each of the m inner products. Stacking examples as rows is also why training on batches is efficient.',
+          refs: ['lec3']
+        },
+
+        // ---------------- PyTorch ----------------
+        {
+          cat: 'pytorch', level: 'Intermediate',
+          q: 'How do 1D tensors like <code>torch.tensor([1, 2, 3])</code> differ from math column and row vectors? What does <code>.T</code> do on a 1D tensor?',
+          hint: 'Check <code>x.shape</code>. Is there a second dimension to swap?',
+          a: 'In math, x ∈ ℝⁿ is an n×1 column and xᵀ is a 1×n row. A 1D tensor has shape <code>(n,)</code> and is <strong>neither</strong>: <code>@</code> infers the meaning from position (<code>x @ y</code> is an inner product, <code>A @ x</code> is matrix-vector, <code>z @ A</code> is vector-matrix). <code>x.T</code> on a 1D tensor returns the same shape and PyTorch warns that this use is deprecated. For an explicit column use <code>x[:, None]</code> or <code>x.unsqueeze(1)</code>, shape (n, 1). For a row use <code>x[None, :]</code>, shape (1, n).',
+          refs: ['lec3', 'ptUnsq']
+        },
+        {
+          cat: 'pytorch', level: 'Foundational',
+          q: 'Translate between 1-indexed math notation and 0-indexed PyTorch for a matrix A ∈ ℝ^(m×n).',
+          hint: 'Subtract one from every index.',
+          a: '• Element <em>Aᵢⱼ</em> is <code>A[i-1, j-1]</code>. For example A₁₂ is <code>A[0, 1]</code>.<br/>• Row <em>i</em>, <em>aᵢᵀ</em>, is <code>A[i-1, :]</code>.<br/>• Column <em>j</em>, <em>aⱼ</em>, is <code>A[:, j-1]</code>.',
+          refs: ['lec3']
+        },
+        {
+          cat: 'pytorch', level: 'Intermediate',
+          q: 'What dtype do you get from <code>torch.tensor([[7, 3, 2], [2, 4, 8]])</code>, and why does it matter?',
+          hint: 'Look at <code>.dtype</code> of the result.',
+          a: 'All-integer literals create a <code>torch.int64</code> tensor. Neural network layers, gradients and most numerical routines need floating point (<code>torch.float32</code>). Write at least one float literal (<code>7.0</code>), pass <code>dtype=torch.float32</code>, or call <code>.float()</code>.',
+          refs: ['lec3', 'ptDtype']
+        },
+        {
+          cat: 'pytorch', level: 'Intermediate',
+          q: 'What happens here, and how do you fix it? <code>A = torch.tensor([[1, 2], [3, 4]]); x = torch.tensor([1.0, 1.0]); A @ x</code>',
+          hint: 'Print <code>A.dtype</code> and <code>x.dtype</code>.',
+          a: 'It raises a <strong>RuntimeError</strong>. A was built from integers, so it is <code>int64</code>, while x is <code>float32</code>, and matrix multiplication does not mix dtypes. Make A floating point (<code>torch.tensor([[1., 2.], [3., 4.]])</code> or <code>A.float()</code>), and <code>A @ x</code> returns <code>tensor([3., 7.])</code>.',
+          refs: ['ptDtype', 'ptMatmul']
+        },
+        {
+          cat: 'pytorch', level: 'Foundational',
+          q: 'What is the difference between <code>A * B</code> and <code>A @ B</code> in PyTorch?',
+          hint: 'One works entry by entry; the other uses inner products of rows and columns.',
+          a: '<code>A * B</code> is <strong>element-wise</strong>: shapes must match (or broadcast), and entry (i, j) is A[i, j]·B[i, j]. <code>A @ B</code> is <strong>matrix multiplication</strong>: inner dimensions must match, and entry (i, j) is row i of A dotted with column j of B. For A = [[1, 2], [3, 4]] and B = [[5, 6], [7, 8]]: <code>A * B</code> = [[5, 12], [21, 32]], while <code>A @ B</code> = [[19, 22], [43, 50]].',
+          refs: ['ptMatmul', 'ptBcast']
+        },
+        {
+          cat: 'pytorch', level: 'Intermediate',
+          q: 'X has shape (B, m, n), a batch of matrices. What does <code>X @ W</code> return when W has shape (n, p)? And when W has shape (B, n, p)?',
+          hint: 'Only the last two dimensions are “the matrix”. What happens to the rest?',
+          a: 'Both return shape <strong>(B, m, p)</strong>. The last two dimensions follow the usual matrix rule, and leading dimensions are treated as batch dimensions. With W of shape (n, p), the same W is applied to every matrix in the batch. With W of shape (B, n, p), matching pairs are multiplied: <code>out[b] = X[b] @ W[b]</code>. This is how the 3D tensors from Lecture 3 appear in practice, for example (batch, sequence, features) activations times a weight matrix.',
+          refs: ['lec3', 'ptMatmul']
+        },
+        {
+          cat: 'pytorch', level: 'Intermediate',
+          q: 'For A of shape (m, n), what are the shapes of <code>A[:, 0]</code> and <code>A[:, 0:1]</code>? How do you compute the outer product of two 1D tensors x and y?',
+          hint: 'An integer index removes a dimension; a slice keeps it.',
+          a: '<code>A[:, 0]</code> has shape <strong>(m,)</strong>, because the integer index drops that dimension. <code>A[:, 0:1]</code> has shape <strong>(m, 1)</strong>, because a slice keeps it. Mixing them up is a classic source of silent broadcasting bugs. For the outer product xyᵀ, use <code>torch.outer(x, y)</code>, or make the shapes explicit: <code>x[:, None] @ y[None, :]</code>.',
+          refs: ['ptOuter', 'ptBcast']
+        },
+
+        // ---------------- Modern AI connections ----------------
+        {
+          cat: 'llm', level: 'Senior/Staff',
+          q: 'In modern LLMs, how does the training objective differ from how the model is evaluated in practice?',
+          hint: 'Compare what the model is trained to do with what users actually ask it to do.',
+          a: 'LLMs are pre-trained only to minimize <strong>next-token cross-entropy</strong> on text. In practice they are judged on <strong>downstream tasks</strong> such as solving math problems, writing code or following instructions, with answers generated one token at a time from the predicted distributions. A key empirical finding of modern AI is that lowering next-token loss reliably improves these downstream abilities.',
+          refs: ['lec2']
+        },
+        {
+          cat: 'llm', level: 'Senior/Staff',
+          q: 'X ∈ ℝ^(m×n) has one token or example per row. What is the structural difference between left-multiplying (AX) and right-multiplying (XB)?',
+          hint: 'Which side touches the rows of X? Left multiplication combines rows.',
+          a: '<strong>AX:</strong> row i of AX is <em>aᵢᵀX</em>, a linear combination of <strong>all rows of X</strong>, so AX <strong>mixes information across tokens</strong>. Transformers use this to share information between positions.<br/><strong>XB:</strong> row i of XB is <em>xᵢᵀB</em>, so B is applied <strong>to each row independently</strong>, with no mixing between tokens. Per-token linear layers work this way.',
+          f: '<strong>If you shuffle the rows of X, what happens to XB?</strong> Its rows shuffle the same way. AX generally changes completely. The AX vs XB lab in this guide shows this.',
+          refs: ['lec3']
+        },
+        {
+          cat: 'llm', level: 'Senior/Staff',
+          q: 'A language model turns a hidden vector h ∈ ℝᵈ into one score per vocabulary word using W ∈ ℝ^(V×d), whose rows are word vectors. Write this as a matrix operation and interpret it with Lecture 3.',
+          hint: 'Each row of W is a word. What do you get from the inner product of every row with h?',
+          a: 'The scores are <strong>Wh ∈ ℝ^V</strong>. By the row view of matrix-vector products, score v is <em>wᵥᵀh</em>, the inner product of the hidden vector with word v’s vector, so words aligned with h score higher. The scores are then normalized into a probability distribution and trained with cross-entropy. For a whole sequence H ∈ ℝ^(T×d), all scores are <em>HWᵀ ∈ ℝ^(T×V)</em>, costing about 2·T·d·V FLOPs. That is large because V is often tens of thousands of words.',
+          refs: ['lec3', 'zth']
+        },
+        {
+          cat: 'llm', level: 'Foundational',
+          q: 'What is a tensor in PyTorch, and why are GPUs so central to training and running large models?',
+          hint: 'Think about which single operation dominates the work in a neural network.',
+          a: 'A PyTorch <strong>tensor</strong> is a multi-dimensional array: 1D is a vector, 2D a matrix, 3D a stack of matrices such as <code>(batch, seq_len, d_model)</code>. Most of the computation in modern neural networks is large matrix multiplications. GPUs are built to run thousands of multiply-adds in parallel, which is exactly what matrix multiplication needs.',
+          refs: ['lec3', 'ptTensors']
         }
       ];
 
+      var QA_LABELS = { supervised: 'Supervised ML', linalg: 'Linear algebra', pytorch: 'PyTorch', llm: 'Modern AI' };
       var qaListEl = document.getElementById('interview-qa-list');
       var currentQAFilter = 'all';
+
+      function refLinks(keys) {
+        return (keys || []).map(function(k) {
+          var r = REF[k];
+          return r ? '<a href="' + r.u + '" target="_blank" rel="noopener noreferrer" class="text-indigo-300 underline">' + r.t + ' &nearr;</a>' : '';
+        }).join(' &middot; ');
+      }
 
       function renderInterviewQAs() {
         if (!qaListEl) return;
         qaListEl.innerHTML = '';
-        interviewQAs.forEach(function(item) {
+        interviewQAs.forEach(function(item, idx) {
           if (currentQAFilter !== 'all' && item.cat !== currentQAFilter) return;
           var card = document.createElement('div');
           card.className = 'searchable-card bg-slate-900/90 border border-slate-800 rounded-xl overflow-hidden transition';
@@ -2430,11 +2589,32 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
           var headerBtn = document.createElement('button');
           headerBtn.type = 'button';
           headerBtn.className = 'w-full p-4 text-left flex items-start justify-between gap-3 hover:bg-slate-800/50 transition';
-          headerBtn.innerHTML = '<div class="space-y-1"><div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ' + badgeColor + '">' + item.cat.toUpperCase() + '</span><span class="text-[10px] font-mono text-slate-400">' + item.level + '</span></div><div class="text-xs sm:text-sm font-bold text-white leading-snug">' + item.q + '</div></div><span class="qa-chevron text-slate-400 font-mono text-sm shrink-0 mt-1">+</span>';
+          headerBtn.innerHTML = '<div class="space-y-1"><div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ' + badgeColor + '">' + QA_LABELS[item.cat] + '</span><span class="text-[10px] font-mono text-slate-400">' + item.level + '</span></div><div class="text-xs sm:text-sm font-bold text-white leading-snug">' + (idx + 1) + '. ' + item.q + '</div></div><span class="qa-chevron text-slate-400 font-mono text-sm shrink-0 mt-1">+</span>';
 
           var bodyDiv = document.createElement('div');
-          bodyDiv.className = 'qa-answer-body hidden px-4 pb-4 pt-2 border-t border-slate-800/80 text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/50';
-          bodyDiv.innerHTML = item.a;
+          bodyDiv.className = 'qa-answer-body hidden px-4 pb-4 pt-3 border-t border-slate-800/80 text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/50 space-y-3';
+
+          var html = '';
+          if (item.hint) {
+            html += '<div class="bg-amber-950/25 rounded-lg px-3 py-2"><span class="text-xs font-bold uppercase tracking-wider text-amber-400">Hint</span><div>' + item.hint + '</div></div>';
+          }
+          html += '<button type="button" class="qa-reveal-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">Show answer</button>';
+          html += '<div class="qa-full hidden space-y-3"><div>' + item.a + '</div>';
+          if (item.f) {
+            html += '<div class="bg-indigo-950/20 rounded-lg px-3 py-2"><span class="text-xs font-bold uppercase tracking-wider text-indigo-300">Likely follow-up</span><div>' + item.f + '</div></div>';
+          }
+          if (item.refs && item.refs.length) {
+            html += '<div class="text-xs text-slate-400"><span class="font-bold uppercase tracking-wider">Go deeper:</span> ' + refLinks(item.refs) + '</div>';
+          }
+          html += '</div>';
+          bodyDiv.innerHTML = html;
+
+          var revealBtn = bodyDiv.querySelector('.qa-reveal-btn');
+          var fullDiv = bodyDiv.querySelector('.qa-full');
+          revealBtn.addEventListener('click', function() {
+            fullDiv.classList.remove('hidden');
+            revealBtn.classList.add('hidden');
+          });
 
           headerBtn.addEventListener('click', function() {
             var isHidden = bodyDiv.classList.contains('hidden');
@@ -2451,8 +2631,11 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
 
       var qaFilterBtns = document.querySelectorAll('.qa-filter-btn');
       qaFilterBtns.forEach(function(btn) {
+        var cat = btn.getAttribute('data-qa-filter');
+        var n = cat === 'all' ? interviewQAs.length : interviewQAs.filter(function(q) { return q.cat === cat; }).length;
+        btn.textContent = btn.textContent.replace(/\s*\(\d+\)\s*$/, '') + ' (' + n + ')';
         btn.addEventListener('click', function() {
-          currentQAFilter = btn.getAttribute('data-qa-filter');
+          currentQAFilter = cat;
           qaFilterBtns.forEach(function(b) {
             b.classList.remove('bg-indigo-600', 'text-white');
             b.classList.add('bg-slate-900', 'text-slate-300');
@@ -2467,13 +2650,15 @@ print(T.shape)    # torch.Size([2, 2, 3]) -> (stack/batch, rows, cols)</code></p
       var collapseAllBtn = document.getElementById('collapse-all-qa-btn');
       if (expandAllBtn) {
         expandAllBtn.addEventListener('click', function() {
-          document.querySelectorAll('.qa-answer-body').forEach(function(el) { el.classList.remove('hidden'); });
+          document.querySelectorAll('.qa-answer-body, .qa-full').forEach(function(el) { el.classList.remove('hidden'); });
+          document.querySelectorAll('.qa-reveal-btn').forEach(function(el) { el.classList.add('hidden'); });
           document.querySelectorAll('.qa-chevron').forEach(function(el) { el.textContent = '−'; });
         });
       }
       if (collapseAllBtn) {
         collapseAllBtn.addEventListener('click', function() {
-          document.querySelectorAll('.qa-answer-body').forEach(function(el) { el.classList.add('hidden'); });
+          document.querySelectorAll('.qa-answer-body, .qa-full').forEach(function(el) { el.classList.add('hidden'); });
+          document.querySelectorAll('.qa-reveal-btn').forEach(function(el) { el.classList.remove('hidden'); });
           document.querySelectorAll('.qa-chevron').forEach(function(el) { el.textContent = '+'; });
         });
       }
